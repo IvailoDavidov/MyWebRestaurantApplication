@@ -1,8 +1,75 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<div class="callbacks_container">
+		<ul class="rslides" id="slider3">
+			<li>
+				<div class="slider-info bg2">
+					<div class="w3l-overlay">
+						<div class="banner-text text-center container">
+							<h3 class="text-white mb-md-4 mb-3">Come to the luxurious 
+								<span>Tasty Snacks</span>
+							</h3>
+							<p class="movetxt text-white mb-4">Find Delivery Outlet near you</p>
+							<div class="search-agile">
+								<form action="#" method="post">
+									<input type="search" name="search" placeholder="Search here..." required="">
+									<input type="submit" value="Search">
+									<div class="clearfix"> </div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<!-- //banner -->
+	<!-- banner slider -->
+	<script src="js/responsiveslides.min.js"></script>
+	<script>
+		// You can also use "$(window).load(function() {"
+		$(function () {
+			// Slideshow 4
+			$("#slider3").responsiveSlides({
+				auto: true,
+				pager: true,
+				nav: false,
+				speed: 500,
+				namespace: "callbacks",
+				before: function () {
+					$('.events').append("<li>before event fired.</li>");
+				},
+				after: function () {
+					$('.events').append("<li>after event fired.</li>");
+				}
+			});
+
+		});
+	</script>
+	<!-- //banner slider -->
+
+	<!-- //password-script -->
+
+	<!-- gallery light box -->
+	<script src="js/smoothbox.jquery2.js"></script>
+	<!-- //gallery light box -->
+
+	<!-- smooth scrolling -->
+	<script src="js/SmoothScroll.min.js"></script>
+	<!-- //smooth scrolling -->
+
+	<!-- move-top -->
+	<script src="js/move-top.js"></script>
+	<!-- easing -->
+	<script src="js/easing.js"></script>
+	<!--  necessary snippets for few javascript files -->
+	<script src="js/snacks.js"></script>
+
+	<script src="js/bootstrap.js"></script>
+	<!-- Necessary-JavaScript-File-For-Bootstrap -->
+	<!-- //Js files -->
+
+
