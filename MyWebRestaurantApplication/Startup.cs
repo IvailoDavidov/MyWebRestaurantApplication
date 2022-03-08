@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyWebRestaurantApplication.Data;
-
+using MyWebRestaurantApplication.Infrastructure;
 
 namespace MyWebRestaurantApplication
 {
@@ -29,15 +29,15 @@ namespace MyWebRestaurantApplication
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => 
+            services.AddDefaultIdentity<IdentityUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
-                })
-                
+            })
+                .AddRoles<IdentityRole>() // for adding roles
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
         }
@@ -45,6 +45,19 @@ namespace MyWebRestaurantApplication
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //Creating to migrate successfully
+            using (var scopedServices = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var serviceProvider = scopedServices.ServiceProvider;
+
+                var dbContext = scopedServices.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                dbContext.Database.Migrate();
+                //pushing some data here.
+                SeedingData someData = new SeedingData();
+
+                someData.Seeding(dbContext);              
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
