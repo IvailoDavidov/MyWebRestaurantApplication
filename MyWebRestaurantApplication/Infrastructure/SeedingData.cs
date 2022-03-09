@@ -17,7 +17,7 @@ namespace MyWebRestaurantApplication.Infrastructure
                     StartWork = "11:00",
                     FinishWork = "23:00",
                     Adress = "Sofia, bulevard ...",
-                    PhoneNumber = "+359 ...",
+                    PhoneNumber = "+359 884 32 52 62",
                     Menu = new Menu
                     {
                         Categories = new List<CategoryMeal>
@@ -26,19 +26,72 @@ namespace MyWebRestaurantApplication.Infrastructure
                            {
                                Name = "Soup",
                                Meals = new List<Meal>
-                               { new Meal { Name = "Chicken Soup", Price = 2.80 },
-                                 new Meal { Name = "Mushroom Soup", Price = 2.40}
-                           }.ToList(),
-                           PictureUrl = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/homemade-pumpkin-soup-royalty-free-image-1571855802.jpg?crop=0.667xw:1.00xh;0.333xw,0&resize=480:*"
-
-                          },
-
-                           new CategoryMeal{Name = "Salad"},
-                           new CategoryMeal{Name = "Pasta"},
-                           new CategoryMeal{Name = "BBQ"},
-                           new CategoryMeal{Name = "Pizza"},
-                           new CategoryMeal{Name = "Traditional"},
-                           new CategoryMeal{Name = "Dessert"},
+                               {
+                                 new Meal { Name = "Chicken Soup", Price = 3.80, PictureUrl = "https://www.ambitiouskitchen.com/wp-content/uploads/2018/02/chickensoup-2-725x725-1.jpg" },
+                                 new Meal { Name = "Mushroom Soup", Price = 3.40, PictureUrl = "https://www.billyparisi.com/wp-content/uploads/2021/02/mushroom-soup-1.jpg" }
+                               }.ToList(),
+                               PictureUrl = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/homemade-pumpkin-soup-royalty-free-image-1571855802.jpg?crop=0.667xw:1.00xh;0.333xw,0&resize=480:*"
+                           },
+                           new CategoryMeal
+                           {
+                               Name = "Salad",
+                               Meals = new List<Meal>
+                               {
+                                 new Meal { Name = "Shopska Salad", Price = 4.60, PictureUrl = "https://diethood.com/wp-content/uploads/2015/07/Shopska-Salad-Macedonian-Chopped-Salad-500x500.jpg" },
+                                 new Meal { Name = "Ovcharska Salad", Price = 5.20, PictureUrl = "https://media-cdn.tripadvisor.com/media/photo-s/10/56/9b/e8/ovcharska-salad.jpg" }
+                               }.ToList(),
+                               PictureUrl = "https://natashaskitchen.com/wp-content/uploads/2019/02/Greek-Salad.jpg"
+                           },
+                           new CategoryMeal
+                           {
+                               Name = "Pasta",
+                               Meals = new List<Meal>
+                               {
+                                  new Meal { Name = "Tagliatelle Carbonara", Price = 6.20, PictureUrl = "https://skinnyspatula.com/wp-content/uploads/2021/10/Tagliatelle_Carbonara2.jpg" },
+                                  new Meal { Name = "Penne All'Arrabbiata", Price = 6.90, PictureUrl = "https://media-cdn.greatbritishchefs.com/media/p4rlqc5t/img72638.jpg?mode=crop&width=768&height=512" }
+                               }.ToList(),
+                               PictureUrl = "https://matekitchen.com/wp-content/uploads/2021/05/pasta-na-furna.jpg"
+                           },
+                           new CategoryMeal
+                           {
+                              Name = "BBQ",
+                              Meals = new List<Meal>
+                              {
+                                 new Meal { Name = "Grilled Rib", Price = 9.90, PictureUrl = "https://www.dadcooksdinner.com/wp-content/uploads/2017/09/Grilled-Short-Ribs-with-Smoked-Spanish-Paprika-Rub-P1004182-.jpg" },
+                                 new Meal { Name = "Beef Steak", Price = 12.90, PictureUrl = "https://lotusgrill.de/fileadmin/_processed_/4/c/csm_bild_rezeptideen1_972d668827.jpeg" }
+                              }.ToList(),
+                              PictureUrl = "https://media-cdn.tripadvisor.com/media/photo-s/12/ba/e3/61/getlstd-property-photo.jpg"
+                           },
+                           new CategoryMeal
+                           {
+                              Name = "Pizza",
+                              Meals = new List<Meal>
+                              {
+                                 new Meal { Name = "Haway", Price = 7.60, PictureUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcRr4p-CzBAO3xRAW-8Bd4EC1GLZDWPM9O9Q&usqp=CAU" },
+                                 new Meal { Name = "Four Cheeses", Price = 6.70, PictureUrl = "http://images.summitmedia-digital.com/yummyph/images/2017/01/16/four-cheese-pizza.jpg" }
+                              }.ToList(),
+                              PictureUrl = "https://www.restu.cz/ir/restaurant/0fb/0fbbdcbeeff1582059fc88b59629da97.jpeg"
+                           },
+                           new CategoryMeal
+                           {
+                               Name = "Traditional",
+                              Meals = new List<Meal>
+                              {
+                                 new Meal { Name = "Mish-Mash", Price = 5.50, PictureUrl = "https://m.1001recepti.com/images/photos/recipes/size_5/menemen-mish-mash-po-turski-8d730effe6c0b44d1d6be4543ea50900-[110065].jpg" },
+                                 new Meal { Name = "Moussaka", Price = 5.20, PictureUrl = "https://d1bvpoagx8hqbg.cloudfront.net/originals/greek-mousaka-recipe-645ecca5141420ebbdc990dede6cf278.jpg" }
+                              }.ToList(),
+                              PictureUrl = "https://st4.depositphotos.com/1570716/20585/i/1600/depositphotos_205859402-stock-photo-indonesian-or-javanese-traditional-food.jpg"
+                           },
+                           new CategoryMeal
+                           {
+                              Name = "Dessert",
+                              Meals = new List<Meal>
+                              {
+                                 new Meal { Name = "Chocolate mousse", Price = 4.60, PictureUrl = "https://www.cookingclassy.com/wp-content/uploads/2020/02/chocolate-mousse-3-500x500.jpg" },
+                                 new Meal { Name = "Tiramissu", Price = 5.20, PictureUrl = "https://img-cdn.dnes.bg/d/images/photos/0513/0000513998-fbh.jpg" }
+                              }.ToList(),
+                              PictureUrl = "https://images.immediate.co.uk/production/volatile/sites/38/2020/02/Gingerbread-souffle-ff41195.jpg?quality=90&resize=768,574"
+                           },
                         }
                     }
                 };

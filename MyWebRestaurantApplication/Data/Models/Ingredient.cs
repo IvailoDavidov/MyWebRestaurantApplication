@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyWebRestaurantApplication.Data.Models
 {
@@ -6,6 +7,8 @@ namespace MyWebRestaurantApplication.Data.Models
     {
         public int Id { get; set; }
 
+        [Required]
+        [StringLength(30)]
         public string Name { get; set; }
 
         public float Gram { get; set; }
