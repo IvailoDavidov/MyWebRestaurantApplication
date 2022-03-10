@@ -10,17 +10,12 @@ namespace MyWebRestaurantApplication.Infrastructure
     {
         public void Seeding(ApplicationDbContext db)
         {
-            if (!db.Restaurant.Any())
+            if (!db.Menu.Any())
             {
-                var restaurant = new Restaurant
+
+                var menu = new Menu
                 {
-                    StartWork = "11:00",
-                    FinishWork = "23:00",
-                    Adress = "Sofia, bulevard ...",
-                    PhoneNumber = "+359 884 32 52 62",
-                    Menu = new Menu
-                    {
-                        Categories = new List<CategoryMeal>
+                    Categories = new List<CategoryMeal>
                         {
                            new CategoryMeal
                            {
@@ -93,10 +88,11 @@ namespace MyWebRestaurantApplication.Infrastructure
                               PictureUrl = "https://images.immediate.co.uk/production/volatile/sites/38/2020/02/Gingerbread-souffle-ff41195.jpg?quality=90&resize=768,574"
                            },
                         }
-                    }
+
                 };
-                db.Restaurant.Add(restaurant);
+                db.Menu.Add(menu);
                 db.SaveChanges();
+
             }
         }
     }

@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MyWebRestaurantApplication.Data;
+using MyWebRestaurantApplication.Data.Models;
 using MyWebRestaurantApplication.Models;
+using MyWebRestaurantApplication.Models.Restaurant;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,12 +14,15 @@ namespace MyWebRestaurantApplication.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext db, ILogger<HomeController> logger)
         {
-            _logger = logger;
+            this.db = db;
+            this._logger = logger;
         }
+
+        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext db;
+     
 
         public IActionResult Index()
         {
@@ -31,6 +37,22 @@ namespace MyWebRestaurantApplication.Controllers
         public IActionResult Contact()
         {
             return View();
+        }
+
+        public IActionResult Services()
+        {
+            return View();
+        }
+
+        public IActionResult Gallery()
+        {
+            var categories = db.Categories.Select(x => new CategoryViewModel
+            {
+                Name = x.Name,
+                PictureUrl = x.PictureUrl
+
+            }).ToList();
+            return View(categories);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

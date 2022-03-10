@@ -15,7 +15,7 @@ namespace MyWebRestaurantApplication.Data
 
         }
 
-        public DbSet<Restaurant> Restaurant { get; set; }
+        
         public DbSet<Menu> Menu { get; set; }
         public DbSet<CategoryMeal> Categories { get; set; }
         public DbSet<Meal> Meals { get; set; }

@@ -12,7 +12,6 @@ namespace MyWebRestaurantApplication.Data.Models
         }
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        public ICollection<CategoryMeal> Categories { get; set; }
-       
+        public ICollection<CategoryMeal> Categories { get; set; }       
     }
 }

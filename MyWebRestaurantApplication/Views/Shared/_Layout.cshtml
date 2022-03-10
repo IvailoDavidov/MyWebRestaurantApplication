@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-@model RestaurantViewModel
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,10 +46,11 @@
                                aria-haspopup="true" aria-expanded="false">Menu                               
                             </a>
                             <div class="dropdown-menu text-lg-left text-center" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item scroll" href="#services">Services</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
                                 <a class="dropdown-item scroll" href="#specials">Specials</a>
                                 @*<div class="dropdown-divider"></div>*@
-                                <a class="dropdown-item scroll" href="#gallery">Gallery</a>
+                             
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Gallery">Gallery</a>
                             </div>
                         </li>
 
@@ -173,16 +174,14 @@
                         <li class="my-2">
                             <a class="scroll" href="#gallery">Gallery</a>
                         </li>
-                        <li>
-                            <a class="scroll" href="#contact">Contact Us</a>
-                        </li>
+                   
                     </ul>
                 </div>
                 <div class="col-lg-2 col-6 footer-grid footer-contact">
                     <h3 class="mb-sm-4 mb-3 pb-3"> Contact Us</h3>
                     <ul class="list-unstyled">
                         <li>
-                            +359..
+                            +359 883 82 02 42
                         </li>
                     </ul>
                 </div>
