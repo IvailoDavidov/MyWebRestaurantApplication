@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebRestaurant</title>
+    <title>@ViewData["Title"] - Restaurant</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/css/bootstrap.css" rel="stylesheet" />
@@ -22,7 +22,7 @@
 			<div class="container">
 				<h1>
 					 <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
-						<i class="fas fa-utensils"></i>Restaurant
+						<i class="fas fa-utensils"></i> Restaurant
 					</a>
 				</h1>
                 <button class="navbar-toggler ml-md-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -47,7 +47,7 @@
                             </a>
                             <div class="dropdown-menu text-lg-left text-center" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
-                                <a class="dropdown-item scroll" href="#specials">Specials</a>
+                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Specials">Specials</a>
                                 @*<div class="dropdown-divider"></div>*@
                              
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Gallery">Gallery</a>

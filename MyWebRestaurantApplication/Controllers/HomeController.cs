@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using MyWebRestaurantApplication.Data;
 using MyWebRestaurantApplication.Data.Models;
 using MyWebRestaurantApplication.Models;
-using MyWebRestaurantApplication.Models.Restaurant;
+using MyWebRestaurantApplication.Models.Menu;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -48,11 +48,17 @@ namespace MyWebRestaurantApplication.Controllers
         {
             var categories = db.Categories.Select(x => new CategoryViewModel
             {
+                Id = x.Id,
                 Name = x.Name,
                 PictureUrl = x.PictureUrl
 
             }).ToList();
             return View(categories);
+        }
+
+        public IActionResult Specials()
+        {
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

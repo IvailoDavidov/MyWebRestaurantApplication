@@ -1,0 +1,19 @@
+﻿@model IEnumerable<MealViewModel>
+
+@foreach (var meal in Model)
+{
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="@meal.PictureUrl" alt="@meal.Id">
+        <div class="card-body">
+            <p class="card-text">@meal.Name - @meal.Price
+            <ul>
+                @foreach (var ingredient in @meal.Ingredients)
+                {
+                    <li>@ingredient.Name</li>
+                }
+            </ul>
+            </p>
+        </div>
+        <a asp-controller="Menu" a asp-action="Add" asp-route-id="" class="btn btn-outline-success">Add to card</a>
+    </div>
+}

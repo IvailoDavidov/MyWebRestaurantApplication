@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyWebRestaurantApplication.Data.Models
 {
@@ -15,7 +16,8 @@ namespace MyWebRestaurantApplication.Data.Models
         [StringLength(30)]
         public string Name { get; set; }
 
-        public double Price { get; set; }
+        [Column(TypeName = "decimal(10,2)")]
+        public decimal Price { get; set; }
 
         public float TotalGram { get; set; }
 

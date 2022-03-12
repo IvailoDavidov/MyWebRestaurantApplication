@@ -302,8 +302,8 @@ namespace MyWebRestaurantApplication.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<float>("TotalGram")
                         .HasColumnType("real");
