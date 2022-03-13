@@ -1,13 +1,33 @@
-﻿using MyWebRestaurantApplication.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using MyWebRestaurantApplication.Data;
 using MyWebRestaurantApplication.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyWebRestaurantApplication.Infrastructure
 {
     public class SeedingData
-    {
+    {     
+        public  async Task CreateAdministrator(ApplicationDbContext db,
+            UserManager<IdentityUser> userManager, 
+            RoleManager<IdentityRole> roleManager)
+        {
+          
+            var role = new IdentityRole { Name = "Administrator" };
+            await roleManager.CreateAsync(role);
+
+            var user = new IdentityUser
+            {
+                UserName = "Administrator",
+                Email = "admin.administrator@abv.bg",
+                PasswordHash = "administrator123"
+            };
+            await userManager.AddToRoleAsync(user, role.Name);
+            await db.SaveChangesAsync();
+        }
+
         public void Seeding(ApplicationDbContext db)
         {
             if (!db.Menu.Any())

@@ -17,14 +17,14 @@
 </head>
 <body>
     <!-- header -->
-  <header>
-		<nav class="navbar navbar-expand-lg navbar-light py-4">
-			<div class="container">
-				<h1>
-					 <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
-						<i class="fas fa-utensils"></i> Restaurant
-					</a>
-				</h1>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light py-4">
+            <div class="container">
+                <h1>
+                    <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-utensils"></i> Restaurant
+                    </a>
+                </h1>
                 <button class="navbar-toggler ml-md-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -34,7 +34,8 @@
 
                     <ul class="navbar-nav mx-auto text-center">
                         <li class="nav-item active">
-                           <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home                            
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
+                                Home
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
@@ -43,31 +44,50 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false">Menu                               
+                               aria-haspopup="true" aria-expanded="false">
+                                Menu
                             </a>
                             <div class="dropdown-menu text-lg-left text-center" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
-                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Specials">Specials</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Specials">Specials</a>
                                 @*<div class="dropdown-divider"></div>*@
-                             
+
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Gallery">Gallery</a>
                             </div>
                         </li>
 
-                        <li class="nav-item">            
+                        <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a>
                         </li>
                     </ul>
-                    <div class="forms-w3ls-agilesm text-center mt-lg-0 mt-4">
-                        <ul>
-                            <li class="login-list-w3ls d-inline border-right pr-3 mr-3">
-                                <a href="#" class="text-white" data-toggle="modal" data-target="#exampleModalCenter1">Login</a>
-                            </li>
-                            <li class="login-list-w3ls d-inline">
-                                <a href="#" class="text-white" data-toggle="modal" data-target="#exampleModalCenter2">Register</a>
-                            </li>
-                        </ul>
-                    </div>
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+                        <div class="forms-w3ls-agilesm text-center mt-lg-0 mt-4">
+                            <ul>
+                                <li class="login-list-w3ls d-inline border-right pr-3 mr-3">
+                                    <a href="#" class="text-white" data-toggle="modal" data-target="#exampleModalCenter1">Login</a>
+                                </li>
+                                <li class="login-list-w3ls d-inline">
+                                    <a href="#" class="text-white" data-toggle="modal" data-target="#exampleModalCenter2">Register</a>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="forms-w3ls-agilesm text-center mt-lg-0 mt-4">
+                            <ul>
+                                <li class="login-list-w3ls d-inline border-right pr-3 mr-3">
+                                    <a href="#" class="text-white" data-toggle="modal" data-target="#exampleModalCenter1">MyProducts</a>
+                                </li>
+                                <li class="login-list-w3ls d-inline">
+                                    @* <a href="#" class="text-white" data-toggle="modal" data-target="#exampleModalCenter2">LogOut</a>*@
+                                    <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/LogOut" asp-route-returnUrl="@Url.Action("Index", "Home")">Logout</a>
+                                    @*<a class="nav-link text-white" asp-area="Identity" asp-controller="Account" asp-action="Logout"  asp-route-returnUrl="@Url.Action("Specials", "Home")">LogOut</a>*@
+                                </li>
+                            </ul>
+                        </div>
+                    }
                 </div>
             </div>
         </nav>
@@ -84,7 +104,7 @@
                 <div class="modal-body">
                     <div class="login px-sm-4 mx-auto mw-100">
                         <h5 class="text-center mb-4">Login Now</h5>
-                       <form asp-area="Identity"asp-controller="Account"asp-action="Login" method="post">
+                        <form asp-area="Identity" asp-controller="Account" asp-action="Login" method="post">
                             <div class="form-group">
                                 <label>Email</label>
                                 <input type="text" class="form-control" name="Email" placeholder="" required="">
@@ -120,7 +140,7 @@
                 <div class="modal-body">
                     <div class="login px-sm-4 mx-auto mw-100">
                         <h5 class="text-center mb-4">Register Now</h5>
-                        <form asp-area="Identity"asp-controller="Account"asp-action="Register" method="post">
+                        <form asp-area="Identity" asp-controller="Account" asp-action="Register" method="post">
                             <div class="form-group">
                                 <label>Your Name</label>
                                 <input type="text" class="form-control" name="name" placeholder="" required="">
@@ -138,7 +158,7 @@
                                 <input type="password" class="form-control" name="ConfirmPassword" id="ConfirmPassword" placeholder="" required="">
                             </div>
                             <button type="submit" class="btn btn-primary submit mb-4">Register</button>
-                      
+
                         </form>
                     </div>
                 </div>
@@ -166,7 +186,8 @@
                             <a class="scroll" href="#services">Login</a>
                         </li>
                         <li class="my-2">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                            <a class="scroll" href="#services">About</a>
+                            @*<a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="About">About</a>*@
                         </li>
                         <li>
                             <a class="scroll" href="#services">Services</a>
@@ -174,7 +195,7 @@
                         <li class="my-2">
                             <a class="scroll" href="#gallery">Gallery</a>
                         </li>
-                   
+
                     </ul>
                 </div>
                 <div class="col-lg-2 col-6 footer-grid footer-contact">

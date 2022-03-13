@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,7 +40,10 @@ namespace MyWebRestaurantApplication
             })
                 .AddRoles<IdentityRole>() // for adding roles
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(option => 
+            {
+                option.Filters.Add<ValidateAntiForgeryTokenAttribute>(); // for security
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +58,7 @@ namespace MyWebRestaurantApplication
                 dbContext.Database.Migrate();
                 //pushing some data here.
                 SeedingData someData = new SeedingData();
-
+                //someData.CreateAdministrator(dbContext);
                 someData.Seeding(dbContext);              
             }
 
