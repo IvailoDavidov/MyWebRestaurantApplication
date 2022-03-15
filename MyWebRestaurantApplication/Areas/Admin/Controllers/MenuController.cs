@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyWebRestaurantApplication.Areas.Admin.Models;
 using MyWebRestaurantApplication.Data;
 using MyWebRestaurantApplication.Data.Models;
-using System.Threading.Tasks;
-
+using System.Linq;
 
 namespace MyWebRestaurantApplication.Areas.Admin.Controllers
 {
@@ -32,8 +31,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
        
         public IActionResult AddMeal()
         {
-
-            return View();
+            return View();           
         }
 
         [HttpPost]

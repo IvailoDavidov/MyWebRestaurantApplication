@@ -10,7 +10,7 @@ using MyWebRestaurantApplication.Data;
 namespace MyWebRestaurantApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220312163113_InitialCreate")]
+    [Migration("20220315160313_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

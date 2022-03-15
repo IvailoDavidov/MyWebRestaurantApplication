@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using MyWebRestaurantApplication.Data;
 using MyWebRestaurantApplication.Data.Models;
 using System;
@@ -9,30 +10,50 @@ using System.Threading.Tasks;
 namespace MyWebRestaurantApplication.Infrastructure
 {
     public class SeedingData
-    {     
-        public  async Task CreateAdministrator(ApplicationDbContext db,
-            UserManager<IdentityUser> userManager, 
-            RoleManager<IdentityRole> roleManager)
+    {
+        public void SeedAdministrator(IServiceProvider serviceProvider)
         {
-          
-            var role = new IdentityRole { Name = "Administrator" };
-            await roleManager.CreateAsync(role);
+            var userManager = serviceProvider.GetService<UserManager<IdentityUser>>();
+            var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
 
-            var user = new IdentityUser
+            //In case everything with userManager is Async, and we aren`t using Task at this moment
+            string admin = "Administrator";
+            Task.Run(async () =>
             {
-                UserName = "Administrator",
-                Email = "admin.administrator@abv.bg",
-                PasswordHash = "administrator123"
-            };
-            await userManager.AddToRoleAsync(user, role.Name);
-            await db.SaveChangesAsync();
+                if (await roleManager.RoleExistsAsync(admin))
+                {
+                    return;                         // Its Meaning = "Run this and Wait It !
+                }
+
+                var role = new IdentityRole
+                { 
+                    Name = admin 
+                };
+
+                await roleManager.CreateAsync(role);
+
+                string adminEmail = "admin@crs.com";
+                string adminPass = "Admin1234567";
+
+                var user = new IdentityUser
+                {
+                    Email = adminEmail,
+                    UserName = adminEmail,                   
+                };
+
+                await userManager.CreateAsync(user, adminPass);
+                await userManager.AddToRoleAsync(user, role.Name);
+
+               
+            })
+                .GetAwaiter()
+                .GetResult();
         }
 
         public void Seeding(ApplicationDbContext db)
         {
             if (!db.Menu.Any())
             {
-
                 var menu = new Menu
                 {
                     Categories = new List<CategoryMeal>

@@ -47,13 +47,23 @@
                                aria-haspopup="true" aria-expanded="false">
                                 Menu
                             </a>
-                            <div class="dropdown-menu text-lg-left text-center" aria-labelledby="navbarDropdown">
+                            @if (User.IsInRole("Administrator"))
+                           {
+                                <div class="dropdown-menu text-lg-left text-center" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Specials">Specials</a>
-                                @*<div class="dropdown-divider"></div>*@
-
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Gallery">Gallery</a>
-                            </div>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Menu" asp-action="AddMeal">Add</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Menu" asp-action="EditMeal">Edit</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Menu" asp-action="RemoveMeal">Remove</a>
+                                </div>
+                           }
+                                <div class="dropdown-menu text-lg-left text-center" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Specials">Specials</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Gallery">Gallery</a>                              
+                                </div>
                         </li>
 
                         <li class="nav-item">

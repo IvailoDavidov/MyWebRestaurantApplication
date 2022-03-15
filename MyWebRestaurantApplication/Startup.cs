@@ -40,10 +40,10 @@ namespace MyWebRestaurantApplication
             })
                 .AddRoles<IdentityRole>() // for adding roles
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddControllersWithViews(option => 
-            {
-                option.Filters.Add<ValidateAntiForgeryTokenAttribute>(); // for security
-            });
+            services.AddControllersWithViews();/*option =>*/
+            //{
+            //    option.Filters.Add<ValidateAntiForgeryTokenAttribute>(); // for security
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,8 +58,8 @@ namespace MyWebRestaurantApplication
                 dbContext.Database.Migrate();
                 //pushing some data here.
                 SeedingData someData = new SeedingData();
-                //someData.CreateAdministrator(dbContext);
-                someData.Seeding(dbContext);              
+                someData.SeedAdministrator(serviceProvider);
+                someData.Seeding(dbContext);
             }
 
             if (env.IsDevelopment())
@@ -83,10 +83,14 @@ namespace MyWebRestaurantApplication
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name:"areaRoute",
+                    pattern:"{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapRazorPages();
             });
         }
