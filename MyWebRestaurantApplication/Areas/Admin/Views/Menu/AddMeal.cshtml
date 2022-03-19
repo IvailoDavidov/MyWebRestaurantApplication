@@ -1,48 +1,65 @@
-﻿@model MyWebRestaurantApplication.Areas.Admin.Models.MealAddViewModel
+﻿@model MealAddViewModel
 
-<form>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="Name">Name</label>
-      <input type="text" class="form-control" id="Name" placeholder="Name">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Password</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputAddress">Address</label>
-    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-  </div>
-  <div class="form-group">
-    <label for="inputAddress2">Address 2</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputCity">City</label>
-      <input type="text" class="form-control" id="inputCity">
-    </div>
-    <div class="form-group col-md-4">
-      <label for="inputState">State</label>
-      <select id="inputState" class="form-control">
-        <option selected>Choose...</option>
-        <option>...</option>
-      </select>
-    </div>
-    <div class="form-group col-md-2">
-      <label for="inputZip">Zip</label>
-      <input type="text" class="form-control" id="inputZip">
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck">
-      <label class="form-check-label" for="gridCheck">
-        Check me out
-      </label>
-    </div>
-  </div>
-  <button type="submit" class="btn btn-primary">Sign in</button>
-</form>
+<div class="callbacks_container">
+    <ul class="rslides" id="slider3">
+        <li>
+            <div class="slider-info bg2">
+                @* <div class="w3l-overlay">*@
+                <div class="banner-text text-center container">
+                    <h3 class="text-white mb-md-4 mb-3">
+                        Come to the luxurious
+                        <span>Tasty Food</span>
+                    </h3>
+                    <p class="movetxt text-white mb-4">Find Delivery Outlet near you</p>
+                    <div class="col-md-5 offset-md-3">
+                        <form method="post">
+                            <div class="form-group">
+                                <p class="color text-white">Name</p>
+                                <input asp-for="Name" class="form-control">
+                                <span asp-validation-for="Name" class="small text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <p class="color text-white">Price</p>
+                                <input asp-for="Price" class="form-control">
+                                <span asp-validation-for="Price" class="small text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <p class="color text-white">Picture</p>
+                                <input asp-for="PictureUrl" class="form-control">
+                                <span asp-validation-for="PictureUrl" class="small text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <p class="color text-white">Category</p>
+                                <input asp-for="CategoryId" class="form-control">
+                                <span asp-validation-for="CategoryId" class="small text-danger"></span>
+                            </div>
+                            @*                            <div class="form-group">
+                                <p class="color text-white">Category</p>
+                                <select asp-for="CategoryId" class="form-control">
+                                @foreach (var category in Model.Categories)
+                                {
+                                <option value="@category.Id">@category.Name</option>
+                                }
+                                </select>
+                                </div>*@
+                            <div class="form-group">
+                                <p class="color text-white">Gram</p>
+                                <input asp-for="TotalGram" class="form-control">
+                                <span asp-validation-for="TotalGram" class="small text-danger"></span>
+                            </div>
+                            <input class="btn btn-danger" type="submit" value="Confirm" />
+                        </form>
+                    </div>
+
+                </div>
+                @*</div>*@
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+    }

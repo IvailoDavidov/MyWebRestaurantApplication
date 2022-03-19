@@ -28,27 +28,43 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
             this.roleManager = roleManager;
         }
 
-       
+
+        [Authorize]
         public IActionResult AddMeal()
         {
-            return View();           
+            return View();
         }
 
         [HttpPost]
-        public IActionResult AddMeal(MealAddViewModel model)
+        public IActionResult AddMeal(MealAddViewModel meal)
         {
-            var meal = new Meal
+
+            if (!ModelState.IsValid)
             {
-                Name = model.Name,
-                Price = model.Price,
-                TotalGram = model.TotalGram,
-                PictureUrl = model.PictureUrl,
-                CategoryId = model.CategoryId,               
+                return BadRequest();
+            }
+
+
+            var newMeal = new Meal
+            {
+                Name = meal.Name,
+                Price = meal.Price,
+                TotalGram = meal.TotalGram,
+                PictureUrl = meal.PictureUrl,
+                CategoryId = meal.CategoryId                                 
             };
 
-            db.Meals.Add(meal);
-            db.SaveChanges();
+
+            if (!db.Meals.Any(x => x.Name == newMeal.Name))
+            {
+                db.Meals.Add(newMeal);
+                db.SaveChanges();
+            }
+
+
             return RedirectToAction("Gallery", "Home");
         }
+
+
     }
 }
