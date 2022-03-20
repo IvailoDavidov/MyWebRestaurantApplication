@@ -1,7 +1,7 @@
-﻿@model MealAddViewModel
+﻿@model EditViewModel
 
 @{
-    ViewData["Title"] = "Add Meal";
+    ViewData["Title"] = "Edit Meal";
 }
 
 <div class="callbacks_container">
@@ -17,25 +17,25 @@
                     <p class="movetxt text-white mb-4">Find Delivery Outlet near you</p>
                     <div class="col-md-5 offset-md-3">
                         <form method="post">
-                            <div class="form-group">
-                                <p class="color text-white">Name</p>                            
+                            <div class="form-group">                           
+                                <label asp-for="Name"></label>
                                 <input asp-for="Name" class="form-control">
-                                <span asp-validation-for="Name"  class="fa-medium-m text-warning"></span>
+                                <span asp-validation-for="Name" class="small text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <p class="color text-white">Price</p>
-                                <input asp-for="Price"  class="form-control">
-                                <span asp-validation-for="Price" class="fa-medium text-warning"></span>
+                                <input asp-for="Price" class="form-control">
+                                <span asp-validation-for="Price" class="small text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <p class="color text-white">Picture</p>
                                 <input asp-for="PictureUrl" class="form-control">
-                                <span asp-validation-for="PictureUrl" class="fa-medium-m text-warning"></span>
-                            </div>                        
+                                <span asp-validation-for="PictureUrl" class="small text-danger"></span>
+                            </div>
                             <div class="form-group">
                                 <p class="color text-white">Gram</p>
-                                <input asp-for="TotalGram"  class="form-control">
-                                <span asp-validation-for="TotalGram" class="fa-medium-m text-warningg"></span>
+                                <input asp-for="TotalGram" class="form-control">
+                                <span asp-validation-for="TotalGram" class="small text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <p class="color text-white">Category</p>
@@ -60,4 +60,5 @@
 
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
- }
+}
+

@@ -28,22 +28,42 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
             this.roleManager = roleManager;
         }
 
-
-        [Authorize]
+    
         public IActionResult AddMeal()
         {
-            return View();
+            var categories = db.Categories.Select(x => new CategoriesViewModel 
+            { 
+                Id = x.Id, 
+                Name = x.Name
+            }).ToList();
+
+            return View(new MealAddViewModel
+            {
+                Categories = categories
+            });
         }
 
         [HttpPost]
         public IActionResult AddMeal(MealAddViewModel meal)
         {
 
-            if (!ModelState.IsValid)
+            if (!User.IsInRole("Administrator"))
             {
-                return BadRequest();
+                return Unauthorized();
             }
 
+            if (!ModelState.IsValid)
+            {
+                var categories = db.Categories.Select(x => new CategoriesViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                }).ToList();
+
+                meal.Categories = categories;
+
+                return View(meal);
+            }
 
             var newMeal = new Meal
             {
@@ -62,9 +82,94 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
             }
 
 
-            return RedirectToAction("Gallery", "Home");
+            return RedirectToAction("Gallery", "Home", new { area = "" });
+           
         }
 
 
+        public IActionResult EditMeal(int Id)
+        {
+
+            var categories = db.Categories.Select(x => new CategoriesViewModel
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToList();
+
+
+            var meal = db.Meals.Where(x => x.Id == Id).Select(x => new EditViewModel
+            {
+                Name = x.Name,
+                Price = x.Price,
+                PictureUrl = x.PictureUrl,
+                TotalGram = x.TotalGram,
+                CategoryId = x.CategoryId,
+                Categories = categories
+
+            }).FirstOrDefault();
+
+
+            return View(meal);
+          
+        }
+
+        [HttpPost]
+        public IActionResult EditMeal(int Id, EditViewModel model)
+        {
+
+            var categories = db.Categories.Select(x => new CategoriesViewModel
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToList();
+
+            var meal = db.Meals.Where(x => x.Id == Id).FirstOrDefault();
+             
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            if (meal == null)
+            {
+                return BadRequest();
+            }
+
+            if (!User.IsInRole("Administrator"))
+            {
+                return Unauthorized();
+            }
+
+            meal.Name = model.Name;
+            meal.Price = model.Price;
+            meal.PictureUrl = model.PictureUrl;
+            meal.TotalGram = model.TotalGram;
+            meal.CategoryId = model.CategoryId;
+            
+
+            this.db.SaveChanges();
+            return RedirectToAction("CategoryMeals","Menu", new { area = "" });
+        }
+
+        public IActionResult DeleteMeal(int Id)
+        {
+            if (!User.IsInRole("Administrator"))
+            {
+                return Unauthorized();
+            }
+
+            var meal = db.Meals.Where(x => x.Id == Id).FirstOrDefault();
+
+            if (meal == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            db.Meals.Remove(meal);
+            db.SaveChanges();
+
+            return RedirectToAction("Gallery", "Home", new { area = "" });
+        }
     }
+
 }

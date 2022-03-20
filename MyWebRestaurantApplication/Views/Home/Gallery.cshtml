@@ -5,8 +5,7 @@
     <div class="card bg-white text-dark">
         <img class="card-img" src="@category.PictureUrl" alt="@category.Name">
         <div class="card-img-bottom">
-            <h5 class="card-title">@category.Name</h5>
-            @*<button type="button" class="btn btn-outline-dark">See More..</button>*@
+            <h5 class="card-title">@category.Name</h5>      
             <a asp-controller="Menu" a asp-action="CategoryMeals" asp-route-id="@category.Id" class="btn btn-outline-danger">See More..</a>
         </div>
     </div>

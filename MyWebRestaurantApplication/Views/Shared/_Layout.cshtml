@@ -56,8 +56,6 @@
                                     <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Gallery">Gallery</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Menu" asp-action="AddMeal">Add</a>
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Menu" asp-action="EditMeal">Edit</a>
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Menu" asp-action="RemoveMeal">Remove</a>
                                 </div>
                             }
                             <div class="dropdown-menu text-lg-left text-center" aria-labelledby="navbarDropdown">
@@ -92,9 +90,7 @@
                                     <a href="#" class="text-white" data-toggle="modal" data-target="#exampleModalCenter1">MyProducts</a>
                                 </li>
                                 <li class="login-list-w3ls d-inline">
-                                    @* <a href="#" class="text-white" data-toggle="modal" data-target="#exampleModalCenter2">LogOut</a>*@
                                     <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/LogOut" asp-route-returnUrl="@Url.Action("Index", "Home")">Logout</a>
-                                    @*<a class="nav-link text-white" asp-area="Identity" asp-controller="Account" asp-action="Logout"  asp-route-returnUrl="@Url.Action("Specials", "Home")">LogOut</a>*@
                                 </li>
                             </ul>
                         </div>
@@ -213,7 +209,10 @@
                     <h3 class="mb-sm-4 mb-3 pb-3"> Contact Us</h3>
                     <ul class="list-unstyled">
                         <li>
-                            +359 883 82 02 42
+                             02/ 82 92 42                         
+                        </li> 
+                        <li>
+                             +359 883 82 02 42
                         </li>
                     </ul>
                 </div>

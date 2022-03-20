@@ -13,10 +13,14 @@ namespace MyWebRestaurantApplication.Areas.Admin.Models
         [StringLength (30,MinimumLength = 2)]
         public string Name { get; set; }
 
+       [Range(0.1, 500)]
         public decimal Price { get; set; }
 
+        [Range(0.1, 2000)]
         public float TotalGram { get; set; }
       
+        [Required]
+        [Url]
         public string PictureUrl { get; set; }
 
         public int CategoryId { get; set; }

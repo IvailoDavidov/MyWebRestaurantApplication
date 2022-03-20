@@ -34,8 +34,7 @@ namespace MyWebRestaurantApplication.Data
             builder.Entity<Ingredient>()
                 .HasMany(i => i.Meals)
                 .WithMany(m => m.Ingredients);
-                
-            
+                          
 
             base.OnModelCreating(builder);
         }
