@@ -13,13 +13,13 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
     public class MenuController : Controller
     {
         private readonly ApplicationDbContext db;
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
 
         public MenuController(ApplicationDbContext db,
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             RoleManager<IdentityRole> roleManager)
         {
             this.db = db;
@@ -81,9 +81,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
                 db.SaveChanges();
             }
 
-
-            return RedirectToAction("Gallery", "Home", new { area = "" });
-           
+            return RedirectToAction("Gallery", "Home", new { area = "" });          
         }
 
 
@@ -113,7 +111,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
           
         }
 
-        [HttpPost]
+        [HttpPost]      
         public IActionResult EditMeal(int Id, EditViewModel model)
         {
 
@@ -149,7 +147,8 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
             
 
             this.db.SaveChanges();
-            return RedirectToAction("CategoryMeals","Menu", new { area = "" });
+            return RedirectToAction("Gallery", "Home", new { area = "" });
+
         }
 
         public IActionResult DeleteMeal(int Id)

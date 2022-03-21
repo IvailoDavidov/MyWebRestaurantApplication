@@ -7,7 +7,7 @@ using System.Text;
 
 namespace MyWebRestaurantApplication.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -15,11 +15,12 @@ namespace MyWebRestaurantApplication.Data
 
         }
 
-        
+        public DbSet<User> User { get; set; }
         public DbSet<Menu> Menu { get; set; }
         public DbSet<CategoryMeal> Categories { get; set; }
         public DbSet<Meal> Meals { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<ShoppingCart> ShoppingCart { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -34,6 +35,12 @@ namespace MyWebRestaurantApplication.Data
             builder.Entity<Ingredient>()
                 .HasMany(i => i.Meals)
                 .WithMany(m => m.Ingredients);
+
+            builder.Entity<User>()
+                .HasOne(u => u.ShoppingCart)
+                .WithOne(c => c.User)
+                .HasForeignKey<User>(u => u.ShoppingCartId)
+                .OnDelete(DeleteBehavior.Restrict);
                           
 
             base.OnModelCreating(builder);

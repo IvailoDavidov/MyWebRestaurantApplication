@@ -1,7 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using MyWebRestaurantApplication.Data.Models
 @model IEnumerable<MealViewModel>
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 <div class="row">
     @foreach (var meal in Model)
@@ -26,7 +27,7 @@
                             @if (SignInManager.IsSignedIn(User) & !User.IsInRole("Administrator"))
                             {
                                 <a class="btn btn-outline-success fa-long-arrow-alt-right" asp-action="AddToCard" asp-route-id="@meal.Id">
-                                    <i class="bi bi-eye-fill"></i> AddToCard
+                                    <i class="bi bi-eye-fill"></i> AddToCard(Price $@meal.Price)
                                 </a>
                             }
                             @if (User.IsInRole("Administrator"))

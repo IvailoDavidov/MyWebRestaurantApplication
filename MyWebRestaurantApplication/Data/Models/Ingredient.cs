@@ -11,8 +11,7 @@ namespace MyWebRestaurantApplication.Data.Models
         [StringLength(30)]
         public string Name { get; set; }
 
-        public float Gram { get; set; }
-
+      
         public ICollection<Meal> Meals { get; set; }
 
     }

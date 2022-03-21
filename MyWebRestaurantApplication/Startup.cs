@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyWebRestaurantApplication.Data;
+using MyWebRestaurantApplication.Data.Models;
 using MyWebRestaurantApplication.Infrastructure;
 
 namespace MyWebRestaurantApplication
@@ -30,7 +31,7 @@ namespace MyWebRestaurantApplication
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<User>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireNonAlphanumeric = false;
