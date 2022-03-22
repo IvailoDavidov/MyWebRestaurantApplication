@@ -1,0 +1,46 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MyWebRestaurantApplication.Data.Models
+@model IEnumerable<UserMealsViewModel>
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (!Model.Any())
+{
+    <h2 class="text-center">You do not have any Products yet.</h2>
+}
+else
+{
+    <div class="row">
+        @foreach (var meal in Model)
+        {
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="@meal.PictureUrl" alt="@meal.Id">
+                    <div class="card-body">
+                        <p class="card-text">
+                            @meal.Name - @meal.Price
+                            <ul>
+                                @foreach (var ingredient in @meal.Ingredients)
+                                {
+                                    <li>@ingredient.Name</li>
+                                }
+                            </ul>
+                        </p>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer ">
+                            <p class="card-text">
+                                @if (SignInManager.IsSignedIn(User) & !User.IsInRole("Administrator"))
+                                {
+                                    <a class="btn btn-outline-success fa-long-arrow-alt-right" asp-controller="User" asp-action="RemoveProduct" asp-route-id="@meal.Id">
+                                        <i class="bi bi-eye-fill"></i> RemoveFromCart(Price - $@meal.Price)
+                                    </a>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

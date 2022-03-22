@@ -29,6 +29,8 @@ namespace MyWebRestaurantApplication.Data.Models
         [Required]
         public CategoryMeal CategoryMeal { get; set; }
 
+        public ICollection<ShoppingCart> ShoppingCarts { get; set; }
+
         public ICollection<Ingredient> Ingredients { get; set; }
     }
 }

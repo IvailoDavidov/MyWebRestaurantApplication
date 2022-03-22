@@ -87,9 +87,13 @@
                     {
                         <div class="forms-w3ls-agilesm text-center mt-lg-0 mt-4">
                             <ul>
-                                <li class="login-list-w3ls d-inline border-right pr-3 mr-3">
-                                    <a href="#" class="text-white" data-toggle="modal" data-target="#exampleModalCenter1">MyProducts</a>
-                                </li>
+                                @if (!User.IsInRole("Administrator"))
+                                {
+                                    <li class="login-list-w3ls d-inline border-right pr-3 mr-3">
+                                        @*<a href="#" class="text-white" data-toggle="modal" data-target="#exampleModalCenter1">MyProducts</a>*@
+                                        <a class="text-white" asp-area="" asp-controller="User" asp-action="MyProducts">MyProducts</a>
+                                    </li>
+                                }
                                 <li class="login-list-w3ls d-inline">
                                     <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/LogOut" asp-route-returnUrl="@Url.Action("Index", "Home")">Logout</a>
                                 </li>
@@ -210,10 +214,10 @@
                     <h3 class="mb-sm-4 mb-3 pb-3"> Contact Us</h3>
                     <ul class="list-unstyled">
                         <li>
-                             02/ 82 92 42                         
-                        </li> 
+                            02/ 82 92 42
+                        </li>
                         <li>
-                             +359 883 82 02 42
+                            +359 883 82 02 42
                         </li>
                     </ul>
                 </div>
