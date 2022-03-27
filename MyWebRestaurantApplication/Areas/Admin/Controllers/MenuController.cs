@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MyWebRestaurantApplication.Areas.Admin.Models;
+using MyWebRestaurantApplication.Areas.Admin.Models.Menu;
 using MyWebRestaurantApplication.Data;
 using MyWebRestaurantApplication.Data.Models;
 using System.Linq;

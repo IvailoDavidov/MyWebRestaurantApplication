@@ -1,4 +1,4 @@
-﻿namespace MyWebRestaurantApplication.Areas.Admin.Models
+﻿namespace MyWebRestaurantApplication.Areas.Admin.Models.Menu
 {
     public class CategoriesViewModel
     {
