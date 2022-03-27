@@ -16,6 +16,8 @@ namespace MyWebRestaurantApplication.Models.User
 
         public string PictureUrl { get; set; }
 
-        public ICollection<IngredientViewModel> Ingredients { get; set; }
+        public int Count { get; set; }
+
+        public ICollection<UserIngredientViewModel> Ingredients { get; set; }
     }
 }

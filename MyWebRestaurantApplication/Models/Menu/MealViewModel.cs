@@ -14,6 +14,8 @@ namespace MyWebRestaurantApplication.Models.Menu
        
         public string PictureUrl { get; set; }
 
+        public int Count { get; set; }
+
         public ICollection<IngredientViewModel> Ingredients { get; set; }
 
     }

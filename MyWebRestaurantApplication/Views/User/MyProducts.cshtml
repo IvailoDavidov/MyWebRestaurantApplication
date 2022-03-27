@@ -4,6 +4,8 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
+
+
 @if (!Model.Any())
 {
     <h2 class="text-center">You do not have any Products yet.</h2>
@@ -14,7 +16,7 @@ else
         @foreach (var meal in Model)
         {
             <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
+                <div class="card h-50" style="width: 20rem;">
                     <img class="card-img-top" src="@meal.PictureUrl" alt="@meal.Id">
                     <div class="card-body">
                         <p class="card-text">
@@ -32,8 +34,8 @@ else
                             <p class="card-text">
                                 @if (SignInManager.IsSignedIn(User) & !User.IsInRole("Administrator"))
                                 {
-                                    <a class="btn btn-outline-success fa-long-arrow-alt-right" asp-controller="User" asp-action="RemoveProduct" asp-route-id="@meal.Id">
-                                        <i class="bi bi-eye-fill"></i> RemoveFromCart(Price - $@meal.Price)
+                                    <a class="btn btn-outline-danger fa-long-arrow-alt-right" asp-controller="User" asp-action="RemoveProduct" asp-route-id="@meal.Id">
+                                        <i class="bi bi-eye-fill"></i> Remove (Price $ -@meal.Price)
                                     </a>
                                 }
                             </p>

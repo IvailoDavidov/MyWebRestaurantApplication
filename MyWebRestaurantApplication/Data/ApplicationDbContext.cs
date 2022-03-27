@@ -42,8 +42,7 @@ namespace MyWebRestaurantApplication.Data
                 .HasForeignKey<User>(u => u.ShoppingCartId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            
-                          
+                                     
 
             base.OnModelCreating(builder);
         }

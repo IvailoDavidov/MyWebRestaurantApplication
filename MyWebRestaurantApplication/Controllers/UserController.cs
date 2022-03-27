@@ -21,8 +21,15 @@ namespace MyWebRestaurantApplication.Controllers
         [Authorize]
         public IActionResult MyProducts()
         {
+            
             string userId = this.User.GetId();
-            var user = db.Users.Include(x => x.ShoppingCart).Where(x => x.Id == userId).FirstOrDefault();
+            var user = db.Users
+                .Include(x => x.ShoppingCart)
+                .ThenInclude(x =>x.Meals)
+                .ThenInclude(x => x.Ingredients)
+                .Where(x => x.Id == userId)
+                .FirstOrDefault();
+            
             if (user == null)
             {
                 return BadRequest();
@@ -30,11 +37,13 @@ namespace MyWebRestaurantApplication.Controllers
 
             var products = user.ShoppingCart.Meals.Select(x => new UserMealsViewModel
             {
+                Id = x.Id,
                 Name = x.Name,
                 Price = x.Price,
                 PictureUrl = x.PictureUrl,
                 TotalGram = x.TotalGram,
-                Ingredients = x.Ingredients.Select(i => new IngredientViewModel
+                Count = x.Count,
+                Ingredients = x.Ingredients.Select(i => new UserIngredientViewModel
                 {
                     Id = i.Id,
                     Name = i.Name
@@ -42,9 +51,8 @@ namespace MyWebRestaurantApplication.Controllers
                 }).ToList()
 
             }).ToList();
-
+           
             return View(products);
-
         }
 
         [Authorize]
@@ -52,33 +60,55 @@ namespace MyWebRestaurantApplication.Controllers
         {
             string userId = this.User.GetId();
 
-            var user = db.Users.Include(x => x.ShoppingCart).Where(x => x.Id == userId).FirstOrDefault();
+            var user = db.Users
+                .Include(x => x.ShoppingCart)
+                .ThenInclude(x => x.Meals)
+                .Where(x => x.Id == userId)
+                .FirstOrDefault();
+
             if (user == null)
             {
                 return BadRequest();
             }
 
             var meal = db.Meals.Where(x => x.Id == Id).FirstOrDefault();
+
             if (meal == null)
             {
                 return BadRequest();
             }
 
-            var cart = db.ShoppingCart.Where(x => x.UserId == userId).FirstOrDefault();
-            cart.Meals.Add(meal);
-            //user.ShoppingCart.Meals.Add(meal);
+            if (user.ShoppingCart.Meals.Contains(meal))
+            {
+                //user.ShoppingCart.Meals.Count++
+            }
+            user.ShoppingCart.Meals.Add(meal);
             db.SaveChanges();
 
             return RedirectToAction("MyProducts", "User");
-
         }
 
         [Authorize]
         public IActionResult RemoveProduct(int Id)
         {
+            string userId = this.User.GetId();
+            var user = db.Users
+           .Include(x => x.ShoppingCart)
+           .ThenInclude(x => x.Meals)
+           .Where(x => x.Id == userId)
+           .FirstOrDefault();
 
+            var meal = db.Meals.Where(x => x.Id == Id).FirstOrDefault();
 
-            return View();
+            if (meal == null)
+            {
+                return BadRequest();
+            }
+            
+            user.ShoppingCart.Meals.Remove(meal);
+            db.SaveChanges();
+
+            return RedirectToAction("MyProducts", "User");
         }
     }
 }

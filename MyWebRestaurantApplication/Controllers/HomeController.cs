@@ -56,7 +56,7 @@ namespace MyWebRestaurantApplication.Controllers
             return View(categories);
         }
 
-        public IActionResult Specials()
+        public IActionResult Events()
         {
             return View();
         }

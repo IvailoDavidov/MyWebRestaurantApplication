@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace MyWebRestaurantApplication.Data.Models
 {
@@ -21,6 +22,8 @@ namespace MyWebRestaurantApplication.Data.Models
         public User User { get; set; }
 
         public ICollection<Meal> Meals { get; set; }
-     
+
+        public decimal TotalSum => Meals.Sum(x => x.Price);
+
     }
 }

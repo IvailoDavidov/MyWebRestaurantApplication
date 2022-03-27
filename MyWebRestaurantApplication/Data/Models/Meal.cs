@@ -9,6 +9,7 @@ namespace MyWebRestaurantApplication.Data.Models
         public Meal()
         {
             Ingredients = new HashSet<Ingredient>();
+            ShoppingCarts = new HashSet<ShoppingCart>();
         }
         public int Id { get; set; }
 
@@ -28,6 +29,8 @@ namespace MyWebRestaurantApplication.Data.Models
 
         [Required]
         public CategoryMeal CategoryMeal { get; set; }
+
+        public int Count { get; set; }
 
         public ICollection<ShoppingCart> ShoppingCarts { get; set; }
 
