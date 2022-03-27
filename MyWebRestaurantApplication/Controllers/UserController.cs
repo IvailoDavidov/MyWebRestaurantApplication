@@ -80,6 +80,7 @@ namespace MyWebRestaurantApplication.Controllers
 
             if (user.ShoppingCart.Meals.Contains(meal))
             {
+
                 //user.ShoppingCart.Meals.Count++
             }
             user.ShoppingCart.Meals.Add(meal);

@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyWebRestaurantApplication.Data;
 
 namespace MyWebRestaurantApplication.Controllers
 {
     public class EventController : Controller
     {
-        public EventController()
-        {
+        private readonly ApplicationDbContext db;
 
+        public EventController(ApplicationDbContext db)
+        {
+            this.db = db;
         }
 
         public IActionResult Events()
