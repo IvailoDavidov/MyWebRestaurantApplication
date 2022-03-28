@@ -19,10 +19,11 @@ namespace MyWebRestaurantApplication.Data.Models
 
         [Column(TypeName = "decimal(10,2)")]
         public decimal Price { get; set; }
-
+       
         public float TotalGram { get; set; }
 
         [Required]
+        [Url]
         public string PictureUrl { get; set; }
 
         public int CategoryId { get; set; }

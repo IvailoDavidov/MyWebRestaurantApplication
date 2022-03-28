@@ -21,15 +21,15 @@ namespace MyWebRestaurantApplication.Controllers
         [Authorize]
         public IActionResult MyProducts()
         {
-            
+
             string userId = this.User.GetId();
             var user = db.Users
                 .Include(x => x.ShoppingCart)
-                .ThenInclude(x =>x.Meals)
+                .ThenInclude(x => x.Meals)
                 .ThenInclude(x => x.Ingredients)
                 .Where(x => x.Id == userId)
                 .FirstOrDefault();
-            
+
             if (user == null)
             {
                 return BadRequest();
@@ -51,7 +51,7 @@ namespace MyWebRestaurantApplication.Controllers
                 }).ToList()
 
             }).ToList();
-           
+
             return View(products);
         }
 
@@ -80,9 +80,22 @@ namespace MyWebRestaurantApplication.Controllers
 
             if (user.ShoppingCart.Meals.Contains(meal))
             {
+                if (meal.Count == 0)
+                {
+                    meal.Count = 1;
+                    meal.Count++;
+                }
+                else
+                {
+                    meal.Count++;
+                }
 
-                //user.ShoppingCart.Meals.Count++
             }
+            else
+            {
+                meal.Count = 1;
+            }
+
             user.ShoppingCart.Meals.Add(meal);
             db.SaveChanges();
 
@@ -93,6 +106,7 @@ namespace MyWebRestaurantApplication.Controllers
         public IActionResult RemoveProduct(int Id)
         {
             string userId = this.User.GetId();
+
             var user = db.Users
            .Include(x => x.ShoppingCart)
            .ThenInclude(x => x.Meals)
@@ -105,9 +119,17 @@ namespace MyWebRestaurantApplication.Controllers
             {
                 return BadRequest();
             }
-            
-            user.ShoppingCart.Meals.Remove(meal);
-            db.SaveChanges();
+
+            if (meal.Count > 1)
+            {
+                meal.Count--;
+                db.SaveChanges();
+            }
+            else
+            {
+                user.ShoppingCart.Meals.Remove(meal);
+                db.SaveChanges();
+            }
 
             return RedirectToAction("MyProducts", "User");
         }

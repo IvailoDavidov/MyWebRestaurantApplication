@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyWebRestaurantApplication.Data;
+using MyWebRestaurantApplication.Data.Models;
 using MyWebRestaurantApplication.Infrastructure;
 using MyWebRestaurantApplication.Models.Cart;
 using MyWebRestaurantApplication.Models.Menu;
@@ -18,6 +21,7 @@ namespace MyWebRestaurantApplication.Controllers
             this.db = db;
         }
 
+        [Authorize]
         public IActionResult Total()
         {
             var userId = this.User.GetId();
@@ -55,6 +59,37 @@ namespace MyWebRestaurantApplication.Controllers
 
             return View(shoppingCart);
 
+        }
+
+        [Authorize]
+        public IActionResult ConfirmOrder()
+        {
+            var userId = this.User.GetId();
+
+            if (userId == null)
+            {
+                return BadRequest();
+            }
+
+            var order = new Order
+            {
+                UserId = userId,
+                DateTime = DateTime.Now
+            };
+
+            db.Orders.Add(order);
+                 
+
+            var user = db.Users
+                .Include(x => x.ShoppingCart)
+                .ThenInclude(x => x.Meals)
+                .Where(x => x.Id == userId)
+                .FirstOrDefault();
+            user.ShoppingCart.Meals.Clear();
+
+            db.SaveChanges();
+
+            return View();
         }
     }
 }

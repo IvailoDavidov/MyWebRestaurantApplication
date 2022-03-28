@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyWebRestaurantApplication.Data.Models
 {
@@ -10,6 +11,8 @@ namespace MyWebRestaurantApplication.Data.Models
         {
             Categories = new HashSet<CategoryMeal>();
         }
+
+        [Required]    
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
         public ICollection<CategoryMeal> Categories { get; set; }       

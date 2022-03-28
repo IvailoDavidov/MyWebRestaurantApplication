@@ -17,6 +17,7 @@ namespace MyWebRestaurantApplication.Data.Models
         public string Name { get; set; }
 
         [Required]
+        [Url]
         public string PictureUrl { get; set; }
 
         public int? NumberOfMeals { get; set; }

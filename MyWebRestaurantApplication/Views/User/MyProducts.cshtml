@@ -8,19 +8,26 @@
 
 @if (!Model.Any())
 {
-    <h2 class="text-center">You do not have any Products yet.</h2>
+    <div class="row container">
+    <div class="col-md-6 offset-3 alert alert-primary text-center mt-5">
+        <h2>You dont have any products yet</h2>
+        <h4>Check our Gallery</h4>
+        <a href="/Home/Gallery" class="button-w3ls mt-5">Gallery</a>       
+    </div>
+</div>
 }
 else
 {
     <div class="row">
         @foreach (var meal in Model)
         {
-            <div class="col-md-4">
+            <div class="col-md-4 mt-5">
                 <div class="card h-50" style="width: 20rem;">
-                    <img class="card-img-top" src="@meal.PictureUrl" alt="@meal.Id">
+                    <img class="card-img-top" src="@meal.PictureUrl" alt="@meal.Id" >
                     <div class="card-body">
                         <p class="card-text">
-                            @meal.Name - @meal.Price
+                            @meal.Name - @meal.Price x @meal.Count
+                            
                             <ul>
                                 @foreach (var ingredient in @meal.Ingredients)
                                 {
@@ -46,7 +53,6 @@ else
         }
     </div>
     <div class="button-div">
- @*       <button type="button" class="btn btn-outline-success btn-lg btn-block">Continue</button>*@
         <a href="/Cart/Total" class="btn btn-outline-success btn-lg btn-block">Continue</a>        
     </div>
 }
