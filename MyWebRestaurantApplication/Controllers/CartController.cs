@@ -79,7 +79,6 @@ namespace MyWebRestaurantApplication.Controllers
 
             db.Orders.Add(order);
                  
-
             var user = db.Users
                 .Include(x => x.ShoppingCart)
                 .ThenInclude(x => x.Meals)
