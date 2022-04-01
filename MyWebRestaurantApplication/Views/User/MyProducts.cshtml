@@ -9,12 +9,12 @@
 @if (!Model.Any())
 {
     <div class="row container">
-    <div class="col-md-6 offset-3 alert alert-primary text-center mt-5">
-        <h2>You dont have any products yet</h2>
-        <h4>Check our Gallery</h4>
-        <a href="/Home/Gallery" class="button-w3ls mt-5">Gallery</a>       
+        <div class="col-md-6 offset-3 alert alert-primary text-center mt-5">
+            <h2>You dont have any products yet</h2>
+            <h4>Check our Gallery</h4>
+            <a href="/Menu/Meals" class="button-w3ls mt-5">Meals</a>
+        </div>
     </div>
-</div>
 }
 else
 {
@@ -22,12 +22,12 @@ else
         @foreach (var meal in Model)
         {
             <div class="col-md-4 mt-5">
-                <div class="card h-50" style="width: 20rem;">
-                    <img class="card-img-top" src="@meal.PictureUrl" alt="@meal.Id" >
-                    <div class="card-body">
+                <div class="card">
+                    <img class="card-img-top" height=300 width=200 src="@meal.PictureUrl" alt="@meal.Id">
+                    <div class="card-body w-50 h-75">
                         <p class="card-text">
                             @meal.Name - @meal.Price x @meal.Count
-                            
+
                             <ul>
                                 @foreach (var ingredient in @meal.Ingredients)
                                 {
@@ -53,6 +53,6 @@ else
         }
     </div>
     <div class="button-div">
-        <a href="/Cart/Total" class="btn btn-outline-success btn-lg btn-block">Continue</a>        
+        <a href="/Cart/Total" class="btn btn-outline-success btn-lg btn-block">Continue</a>
     </div>
 }

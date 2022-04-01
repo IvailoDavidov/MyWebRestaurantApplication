@@ -22,8 +22,8 @@ namespace MyWebRestaurantApplication.Data.Models
         public User User { get; set; }
 
         public ICollection<Meal> Meals { get; set; }
-
-        public decimal TotalSum => Meals.Sum(x => x.Price);
+   
+        public decimal TotalSum => Meals.Sum(x => x.Price * x.Count);
 
     }
 }

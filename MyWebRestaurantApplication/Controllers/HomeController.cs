@@ -14,15 +14,7 @@ namespace MyWebRestaurantApplication.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController(ApplicationDbContext db, ILogger<HomeController> logger)
-        {
-            this.db = db;
-            this._logger = logger;
-        }
-
-        private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext db;
-     
+   
 
         public IActionResult Index()
         {
@@ -44,18 +36,7 @@ namespace MyWebRestaurantApplication.Controllers
             return View();
         }
 
-        public IActionResult Gallery()
-        {
-            var categories = db.Categories.Select(x => new CategoryViewModel
-            {
-                Id = x.Id,
-                Name = x.Name,
-                PictureUrl = x.PictureUrl
-
-            }).ToList();
-            return View(categories);
-        }
-    
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

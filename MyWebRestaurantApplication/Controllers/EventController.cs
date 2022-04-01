@@ -5,17 +5,7 @@ namespace MyWebRestaurantApplication.Controllers
 {
     public class EventController : Controller
     {
-        private readonly ApplicationDbContext db;
-
-        public EventController(ApplicationDbContext db)
-        {
-            this.db = db;
-        }
-
-        public IActionResult Events()
-        {
-            return View();
-        }
+       
 
         public IActionResult ChildParty()
         {

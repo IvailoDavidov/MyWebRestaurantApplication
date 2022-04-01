@@ -9,60 +9,48 @@ using MyWebRestaurantApplication.Models.Cart;
 using MyWebRestaurantApplication.Models.Menu;
 using MyWebRestaurantApplication.Models.User;
 using System.Linq;
+using MyWebRestaurantApplication.Services.User;
+using MyWebRestaurantApplication.Services.Cart;
 
 namespace MyWebRestaurantApplication.Controllers
 {
     public class CartController : Controller
     {
-        private readonly ApplicationDbContext db;
+       
+        private readonly IUserService userService;
+        private readonly ICartService cartService;
 
-        public CartController(ApplicationDbContext db)
+        public CartController(IUserService userService , ICartService cartService)
         {
-            this.db = db;
+            
+            this.userService = userService;
+            this.cartService = cartService;
         }
 
         [Authorize]
         public IActionResult Total()
         {
             var userId = this.User.GetId();
-            var user = db.Users
-                .Include(x => x.ShoppingCart)
-                .ThenInclude(x => x.Meals)
-                .ThenInclude(x => x.Ingredients)
-                .Where(x => x.Id == userId)
-                .FirstOrDefault();
-
-            var products = user.ShoppingCart.Meals.Select(x => new UserMealsViewModel
+            if (userId == null)
             {
-                Id = x.Id,
-                Name = x.Name,
-                Price = x.Price,
-                PictureUrl = x.PictureUrl,
-                Count = x.Count,
-                TotalGram = x.TotalGram,
-                Ingredients = x.Ingredients.Select(i => new UserIngredientViewModel
-                {
-                    Id = i.Id,
-                    Name = i.Name
-                }).ToList(),
+                return BadRequest();
+            }
+           
 
-            }).ToList();
+            var user = userService.GetById(userId);
 
-
-            var shoppingCart = db.ShoppingCart
-                .Where(x => x.UserId == userId)
-                .Select(x => new ShoppingCartViewModel
-                {
-                    Id = x.Id,
-                    Meals = products
-                }).FirstOrDefault();
+            if (user == null)
+            {
+                return BadRequest();
+            }
+               
+            var shoppingCart = userService.GetShoppingCart(userId);
 
             return View(shoppingCart);
-
         }
 
         [Authorize]
-        public IActionResult ConfirmOrder()
+        public IActionResult ConfirmOrder(OrderViewModel order)
         {
             var userId = this.User.GetId();
 
@@ -71,22 +59,15 @@ namespace MyWebRestaurantApplication.Controllers
                 return BadRequest();
             }
 
-            var order = new Order
+            cartService.CreateOrder(order, userId);
+
+            var user = userService.GetById(userId);
+            if (user == null)
             {
-                UserId = userId,
-                DateTime = DateTime.Now
-            };
+                return BadRequest();
+            }
 
-            db.Orders.Add(order);
-                 
-            var user = db.Users
-                .Include(x => x.ShoppingCart)
-                .ThenInclude(x => x.Meals)
-                .Where(x => x.Id == userId)
-                .FirstOrDefault();
-            user.ShoppingCart.Meals.Clear();
-
-            db.SaveChanges();
+            cartService.Clear(user);
 
             return View();
         }

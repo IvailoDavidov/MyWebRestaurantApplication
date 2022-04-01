@@ -1,43 +1,45 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyWebRestaurantApplication.Data;
 using MyWebRestaurantApplication.Models.Menu;
+using MyWebRestaurantApplication.Services.Menu;
 using System.Linq;
 
 namespace MyWebRestaurantApplication.Controllers
 {
     public class MenuController : Controller
     {
-        private readonly ApplicationDbContext db;
+       
+        private readonly IMenuService menuService;
 
-        public MenuController(ApplicationDbContext db)
+        public MenuController(IMenuService menuService)
         {
-            this.db = db;
+           
+            this.menuService = menuService;
         }
         public IActionResult CategoryMeals(int Id)
         {
 
-            var categorie = db.Categories.Where(x => x.Id == Id).FirstOrDefault();
-            if (categorie == null)
+            var category = menuService.CategoryId(Id);
+
+            if (category == null)
             {
                 return BadRequest();
             }
 
-            var meals = db.Meals.Where(x => x.CategoryId == Id).Select(x => new MealViewModel
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Price = x.Price,
-                PictureUrl = x.PictureUrl,
-                Ingredients = x.Ingredients.Select(i => new IngredientViewModel
-                {
-                    Name = i.Name, 
-                    
-                }).ToList(),
-                
-
-            }).ToList();
-
+            var meals = menuService.MealsByCategory(Id);
+           
             return View(meals);                 
+        }
+
+        public IActionResult Meals()
+        {
+            var categories = menuService.Categories();
+            return View(categories);
+        }
+
+        public IActionResult Events()
+        {
+            return View();
         }
     }
 }

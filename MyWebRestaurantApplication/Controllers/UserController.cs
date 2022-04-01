@@ -2,20 +2,24 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyWebRestaurantApplication.Data;
+using MyWebRestaurantApplication.Data.Models;
 using MyWebRestaurantApplication.Infrastructure;
+using MyWebRestaurantApplication.Models.Cart;
 using MyWebRestaurantApplication.Models.Menu;
 using MyWebRestaurantApplication.Models.User;
+using MyWebRestaurantApplication.Services.User;
 using System.Linq;
 
 namespace MyWebRestaurantApplication.Controllers
 {
     public class UserController : Controller
     {
-        private readonly ApplicationDbContext db;
+        
+        private readonly IUserService userService;
 
-        public UserController(ApplicationDbContext db)
-        {
-            this.db = db;
+        public UserController( IUserService userService)
+        {           
+            this.userService = userService;
         }
 
         [Authorize]
@@ -23,60 +27,37 @@ namespace MyWebRestaurantApplication.Controllers
         {
 
             string userId = this.User.GetId();
-            var user = db.Users
-                .Include(x => x.ShoppingCart)
-                .ThenInclude(x => x.Meals)
-                .ThenInclude(x => x.Ingredients)
-                .Where(x => x.Id == userId)
-                .FirstOrDefault();
+            var user = userService.GetById(userId);
 
             if (user == null)
             {
                 return BadRequest();
             }
 
-            var products = user.ShoppingCart.Meals.Select(x => new UserMealsViewModel
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Price = x.Price,
-                PictureUrl = x.PictureUrl,
-                TotalGram = x.TotalGram,
-                Count = x.Count,
-                Ingredients = x.Ingredients.Select(i => new UserIngredientViewModel
-                {
-                    Id = i.Id,
-                    Name = i.Name
-
-                }).ToList()
-
-            }).ToList();
-
+            var products = userService.Products(userId);
             return View(products);
         }
+
 
         [Authorize]
         public IActionResult AddProduct(int Id)
         {
             string userId = this.User.GetId();
 
-            var user = db.Users
-                .Include(x => x.ShoppingCart)
-                .ThenInclude(x => x.Meals)
-                .Where(x => x.Id == userId)
-                .FirstOrDefault();
+            var user = userService.GetById(userId);
 
             if (user == null)
             {
                 return BadRequest();
             }
 
-            var meal = db.Meals.Where(x => x.Id == Id).FirstOrDefault();
+            var meal = userService.GetMealById(Id);
 
             if (meal == null)
             {
                 return BadRequest();
             }
+
 
             if (user.ShoppingCart.Meals.Contains(meal))
             {
@@ -96,8 +77,7 @@ namespace MyWebRestaurantApplication.Controllers
                 meal.Count = 1;
             }
 
-            user.ShoppingCart.Meals.Add(meal);
-            db.SaveChanges();
+            userService.SaveProduct(user,meal);
 
             return RedirectToAction("MyProducts", "User");
         }
@@ -105,31 +85,25 @@ namespace MyWebRestaurantApplication.Controllers
         [Authorize]
         public IActionResult RemoveProduct(int Id)
         {
-            string userId = this.User.GetId();
+            string userId = this.User.GetId();           
 
-            var user = db.Users
-           .Include(x => x.ShoppingCart)
-           .ThenInclude(x => x.Meals)
-           .Where(x => x.Id == userId)
-           .FirstOrDefault();
+            var user = userService.GetById(userId);
 
-            var meal = db.Meals.Where(x => x.Id == Id).FirstOrDefault();
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var meal = userService.GetMealById(Id);
 
             if (meal == null)
             {
                 return BadRequest();
             }
 
-            if (meal.Count > 1)
-            {
-                meal.Count--;
-                db.SaveChanges();
-            }
-            else
-            {
-                user.ShoppingCart.Meals.Remove(meal);
-                db.SaveChanges();
-            }
+       
+
+            userService.RemoveProduct(user, meal);
 
             return RedirectToAction("MyProducts", "User");
         }

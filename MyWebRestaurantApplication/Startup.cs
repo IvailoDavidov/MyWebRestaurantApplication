@@ -11,6 +11,9 @@ using Microsoft.Extensions.Hosting;
 using MyWebRestaurantApplication.Data;
 using MyWebRestaurantApplication.Data.Models;
 using MyWebRestaurantApplication.Infrastructure;
+using MyWebRestaurantApplication.Services.Cart;
+using MyWebRestaurantApplication.Services.Menu;
+using MyWebRestaurantApplication.Services.User;
 
 namespace MyWebRestaurantApplication
 {
@@ -45,6 +48,10 @@ namespace MyWebRestaurantApplication
             //{
             //    option.Filters.Add<ValidateAntiForgeryTokenAttribute>(); // for security
             //});
+
+            services.AddTransient<IMenuService, MenuService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICartService, CartService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
