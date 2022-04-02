@@ -13,6 +13,10 @@ namespace MyWebRestaurantApplication.Data.Models
 
         public User User { get; set; }
 
+  
+        [StringLength(100)]
+        public string UserAdress { get; set; }
+
         public DateTime DateTime { get; set; }
     }
 }

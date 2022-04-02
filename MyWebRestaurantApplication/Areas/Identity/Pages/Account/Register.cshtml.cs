@@ -61,6 +61,9 @@ namespace MyWebRestaurantApplication.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [StringLength(100, ErrorMessage = "Adresss should be below 100 symbols")]
+            public string Adress { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -76,7 +79,7 @@ namespace MyWebRestaurantApplication.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                
-                var user = new User { UserName = Input.Email, Email = Input.Email };
+                var user = new User { UserName = Input.Email, Email = Input.Email, Address = Input.Adress };
                 var cart = new ShoppingCart {User = user, UserId = user.Id };
                 user.ShoppingCart = cart;
                 user.ShoppingCartId = cart.Id;

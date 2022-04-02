@@ -1,6 +1,4 @@
-﻿using MyWebRestaurantApplication.Data.Models;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyWebRestaurantApplication.Areas.Admin.Models.Menu

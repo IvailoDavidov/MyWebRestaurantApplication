@@ -1,10 +1,7 @@
 ﻿using System;
-using Microsoft.AspNetCore.Identity;
 using MyWebRestaurantApplication.Data;
 using MyWebRestaurantApplication.Data.Models;
 using MyWebRestaurantApplication.Models.Cart;
-using MyWebRestaurantApplication.Services.User;
-using System.Security.Claims;
 
 namespace MyWebRestaurantApplication.Services.Cart
 {
@@ -12,7 +9,6 @@ namespace MyWebRestaurantApplication.Services.Cart
     {
         private readonly ApplicationDbContext db;
    
-
         public CartService(ApplicationDbContext db)
         {
             this.db = db;
@@ -25,12 +21,13 @@ namespace MyWebRestaurantApplication.Services.Cart
             db.SaveChanges();
         }
 
-        public void CreateOrder(OrderViewModel order, string userId)
+        public void CreateOrder(OrderViewModel order, Data.Models.User user)
         {
            
             var newOrder = new Order
             {              
-               UserId = userId,
+               UserId = user.Id,
+               UserAdress = user.Address,              
                DateTime = DateTime.Now              
             };
 

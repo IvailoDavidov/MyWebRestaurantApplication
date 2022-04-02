@@ -1,13 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyWebRestaurantApplication.Areas.Admin.Services.Menu;
 using MyWebRestaurantApplication.Data;
 using MyWebRestaurantApplication.Data.Models;
 using MyWebRestaurantApplication.Infrastructure;
@@ -52,6 +50,7 @@ namespace MyWebRestaurantApplication
             services.AddTransient<IMenuService, MenuService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICartService, CartService>();
+            services.AddTransient<IAdminMenuService, AdminMenuService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +63,7 @@ namespace MyWebRestaurantApplication
 
                 var dbContext = scopedServices.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 dbContext.Database.Migrate();
+
                 //pushing some data here.
                 SeedingData someData = new SeedingData();
                 someData.SeedAdministrator(serviceProvider);

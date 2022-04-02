@@ -1,14 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MyWebRestaurantApplication.Data;
-using MyWebRestaurantApplication.Data.Models;
 using MyWebRestaurantApplication.Infrastructure;
-using MyWebRestaurantApplication.Models.Cart;
-using MyWebRestaurantApplication.Models.Menu;
-using MyWebRestaurantApplication.Models.User;
 using MyWebRestaurantApplication.Services.User;
-using System.Linq;
 
 namespace MyWebRestaurantApplication.Controllers
 {
@@ -25,7 +18,6 @@ namespace MyWebRestaurantApplication.Controllers
         [Authorize]
         public IActionResult MyProducts()
         {
-
             string userId = this.User.GetId();
             var user = userService.GetById(userId);
 
@@ -43,7 +35,6 @@ namespace MyWebRestaurantApplication.Controllers
         public IActionResult AddProduct(int Id)
         {
             string userId = this.User.GetId();
-
             var user = userService.GetById(userId);
 
             if (user == null)
@@ -78,7 +69,6 @@ namespace MyWebRestaurantApplication.Controllers
             }
 
             userService.SaveProduct(user,meal);
-
             return RedirectToAction("MyProducts", "User");
         }
 
@@ -86,7 +76,6 @@ namespace MyWebRestaurantApplication.Controllers
         public IActionResult RemoveProduct(int Id)
         {
             string userId = this.User.GetId();           
-
             var user = userService.GetById(userId);
 
             if (user == null)
@@ -101,11 +90,8 @@ namespace MyWebRestaurantApplication.Controllers
                 return BadRequest();
             }
 
-       
-
             userService.RemoveProduct(user, meal);
-
             return RedirectToAction("MyProducts", "User");
-        }
+        }       
     }
 }

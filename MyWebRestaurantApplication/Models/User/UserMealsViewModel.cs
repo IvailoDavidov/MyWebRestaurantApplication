@@ -1,11 +1,9 @@
-﻿using MyWebRestaurantApplication.Models.Menu;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MyWebRestaurantApplication.Models.User
 {
     public class UserMealsViewModel
     {
-
         public int Id { get; set; }
 
         public string Name { get; set; }

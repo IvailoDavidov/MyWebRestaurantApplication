@@ -1,0 +1,40 @@
+﻿@model MealViewModel
+
+<div class="col-md-4 col-xl-12 border-white mb-3 mt-5">
+    <div class="card mb-5" style="max-width: 940px;">
+        <div class="row g-0">
+            <div class="col-md-12">
+                <div class="card-header text-white bg-info">
+                    <p class="card-text">
+                        <h5 class="card-title">
+                            @Model.Name
+                        </h5>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img src="@Model.PictureUrl" width="500" alt="@Model.Name">
+            </div>
+            <div class="col-md-6">
+                <div class="card-body">
+                    @{
+                        int count = 1;
+                    }
+                    @if (Model.Ingredients.Any())
+                    {
+                        <p class="cart-text badge-dark">Ingredients:</p>
+                    }
+                    @foreach (var item in Model.Ingredients)
+                    {
+                        <p class="card-text alert-dark">@count. @item.Name</p>
+                        count++;
+                    }
+                    <p class="cart-text  badge-dark">Gram: @Model.TotalGram g.</p>
+                    <p class="cart-text  badge-dark">Price: @Model.Price $ </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

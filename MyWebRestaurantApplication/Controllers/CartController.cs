@@ -1,14 +1,7 @@
-﻿using System;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MyWebRestaurantApplication.Data;
-using MyWebRestaurantApplication.Data.Models;
 using MyWebRestaurantApplication.Infrastructure;
 using MyWebRestaurantApplication.Models.Cart;
-using MyWebRestaurantApplication.Models.Menu;
-using MyWebRestaurantApplication.Models.User;
-using System.Linq;
 using MyWebRestaurantApplication.Services.User;
 using MyWebRestaurantApplication.Services.Cart;
 
@@ -36,7 +29,6 @@ namespace MyWebRestaurantApplication.Controllers
                 return BadRequest();
             }
            
-
             var user = userService.GetById(userId);
 
             if (user == null)
@@ -45,7 +37,6 @@ namespace MyWebRestaurantApplication.Controllers
             }
                
             var shoppingCart = userService.GetShoppingCart(userId);
-
             return View(shoppingCart);
         }
 
@@ -59,14 +50,14 @@ namespace MyWebRestaurantApplication.Controllers
                 return BadRequest();
             }
 
-            cartService.CreateOrder(order, userId);
-
             var user = userService.GetById(userId);
+
             if (user == null)
             {
                 return BadRequest();
             }
 
+            cartService.CreateOrder(order, user);
             cartService.Clear(user);
 
             return View();

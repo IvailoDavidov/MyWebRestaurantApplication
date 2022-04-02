@@ -17,7 +17,9 @@
     <link href="~/css/style.css" rel="stylesheet" />
     <link href="~/css/cartsize.css" rel="stylesheet" />
     <link href="~/css//section.css" rel="stylesheet" />
-   
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-grid.css.map" />
+
+
 
 </head>
 <body>
@@ -47,6 +49,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="About">About</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Events">Events</a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
@@ -54,17 +62,13 @@
                             </a>
                             @if (User.IsInRole("Administrator"))
                             {
-                                <div class="dropdown-menu text-lg-left text-center" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Menu" asp-action="Events">Events</a>
+                                <div class="dropdown-menu text-lg-left text-center" aria-labelledby="navbarDropdown">                                 
                                     <a class="dropdown-item" asp-area="" asp-controller="Menu" asp-action="Meals">Meals</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Menu" asp-action="AddMeal">Add</a>
                                 </div>
                             }
-                            <div class="dropdown-menu text-lg-left text-center" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Menu" asp-action="Events">Events</a>
+                            <div class="dropdown-menu text-lg-left text-center" aria-labelledby="navbarDropdown">                          
                                 <a class="dropdown-item" asp-area="" asp-controller="Menu" asp-action="Meals">Meals</a>
                             </div>
 
@@ -93,7 +97,7 @@
                             <ul>
                                 @if (!User.IsInRole("Administrator"))
                                 {
-                                    <li class="login-list-w3ls d-inline border-right pr-3 mr-3">                                      
+                                    <li class="login-list-w3ls d-inline border-right pr-3 mr-3">
                                         <a class="text-white" asp-area="" asp-controller="User" asp-action="MyProducts">MyProducts</a>
                                     </li>
                                 }
@@ -172,6 +176,10 @@
                                 <label>Confirm Password</label>
                                 <input type="password" class="form-control" name="ConfirmPassword" id="ConfirmPassword" placeholder="" required="">
                             </div>
+                               <div class="form-group">
+                                <label>Adress</label>
+                                <input type="text" class="form-control" name="Adress" id="Adress" placeholder="" required="">
+                            </div>
                             <button type="submit" class="btn btn-primary submit mb-4">Register</button>
 
                         </form>
@@ -201,7 +209,7 @@
                             <a class="scroll" href="#services">Login</a>
                         </li>
                         <li class="my-2">
-                            <a class="scroll" href="#services">About</a>                         
+                            <a class="scroll" href="#services">About</a>
                         </li>
                         <li>
                             <a class="scroll" href="#services">Services</a>
@@ -209,7 +217,7 @@
                         <li class="my-2">
                             <a class="scroll" href="#services">Gallery</a>
                         </li>
-                         <li class="my-2">
+                        <li class="my-2">
                             <a class="scroll" href="#services">Events</a>
                         </li>
 

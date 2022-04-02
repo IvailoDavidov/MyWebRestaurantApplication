@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyWebRestaurantApplication.Areas.Admin.Models.Menu;
+using MyWebRestaurantApplication.Areas.Admin.Services.Menu;
 using MyWebRestaurantApplication.Data;
 using MyWebRestaurantApplication.Data.Models;
-using System.Linq;
 
 namespace MyWebRestaurantApplication.Areas.Admin.Controllers
 {
@@ -13,29 +12,23 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
     public class MenuController : Controller
     {
         private readonly ApplicationDbContext db;
-        private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IAdminMenuService adminMenuService;
 
-        public MenuController(ApplicationDbContext db,
-            UserManager<User> userManager,
-            SignInManager<User> signInManager,
-            RoleManager<IdentityRole> roleManager)
+        public MenuController(ApplicationDbContext db, IAdminMenuService adminMenuService)
         {
             this.db = db;
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-            this.roleManager = roleManager;
+            this.adminMenuService = adminMenuService;
         }
 
-    
+
         public IActionResult AddMeal()
         {
-            var categories = db.Categories.Select(x => new CategoriesViewModel 
-            { 
-                Id = x.Id, 
-                Name = x.Name
-            }).ToList();
+            if (!User.IsInRole("Administrator"))
+            {
+                return Unauthorized();
+            }
+
+            var categories = adminMenuService.Categories();
 
             return View(new MealAddViewModel
             {
@@ -54,12 +47,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                var categories = db.Categories.Select(x => new CategoriesViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name
-                }).ToList();
-
+                var categories = adminMenuService.Categories();
                 meal.Categories = categories;
 
                 return View(meal);
@@ -71,58 +59,42 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
                 Price = meal.Price,
                 TotalGram = meal.TotalGram,
                 PictureUrl = meal.PictureUrl,
-                CategoryId = meal.CategoryId                                 
+                CategoryId = meal.CategoryId
             };
 
 
-            if (!db.Meals.Any(x => x.Name == newMeal.Name))
+            if (adminMenuService.CheckMealExists(newMeal.Name))
             {
-                db.Meals.Add(newMeal);
-                db.SaveChanges();
+                adminMenuService.AddMeal(newMeal);
             }
 
-            return RedirectToAction("Gallery", "Home", new { area = "" });          
+            return RedirectToAction("Meals", "Menu", new { area = "" });
         }
 
 
         public IActionResult EditMeal(int Id)
         {
-
-            var categories = db.Categories.Select(x => new CategoriesViewModel
+            if (!User.IsInRole("Administrator"))
             {
-                Id = x.Id,
-                Name = x.Name
-            }).ToList();
+                return Unauthorized();
+            }
 
-
-            var meal = db.Meals.Where(x => x.Id == Id).Select(x => new EditViewModel
-            {
-                Name = x.Name,
-                Price = x.Price,
-                PictureUrl = x.PictureUrl,
-                TotalGram = x.TotalGram,
-                CategoryId = x.CategoryId,
-                Categories = categories
-
-            }).FirstOrDefault();
-
+            var categories = adminMenuService.Categories();  
+            var meal = adminMenuService.GetMealWithCategories(Id, categories);
 
             return View(meal);
-          
         }
 
-        [HttpPost]      
-        public IActionResult EditMeal(int Id, EditViewModel model)
+        [HttpPost]
+        public IActionResult EditMeal(int Id, MealEditViewModel model)
         {
 
-            var categories = db.Categories.Select(x => new CategoriesViewModel
+            if (!User.IsInRole("Administrator"))
             {
-                Id = x.Id,
-                Name = x.Name
-            }).ToList();
+                return Unauthorized();
+            }
 
-            var meal = db.Meals.Where(x => x.Id == Id).FirstOrDefault();
-             
+            var meal = adminMenuService.GetMealById(Id);
 
             if (!ModelState.IsValid)
             {
@@ -139,16 +111,8 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
                 return Unauthorized();
             }
 
-            meal.Name = model.Name;
-            meal.Price = model.Price;
-            meal.PictureUrl = model.PictureUrl;
-            meal.TotalGram = model.TotalGram;
-            meal.CategoryId = model.CategoryId;
-            
-
-            this.db.SaveChanges();
-            return RedirectToAction("Gallery", "Home", new { area = "" });
-
+            adminMenuService.EditMeal(meal, model);
+            return RedirectToAction("Meals", "Menu", new { area = "" });
         }
 
         public IActionResult DeleteMeal(int Id)
@@ -158,17 +122,15 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
                 return Unauthorized();
             }
 
-            var meal = db.Meals.Where(x => x.Id == Id).FirstOrDefault();
+            var meal = adminMenuService.GetMealById(Id);
 
             if (meal == null)
             {
                 return RedirectToAction("Error", "Home");
             }
-            db.Meals.Remove(meal);
-            db.SaveChanges();
 
+            adminMenuService.RemoveMeal(meal);
             return RedirectToAction("Gallery", "Home", new { area = "" });
         }
     }
-
 }

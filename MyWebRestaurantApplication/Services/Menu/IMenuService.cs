@@ -11,5 +11,7 @@ namespace MyWebRestaurantApplication.Services.Menu
         public CategoryMeal CategoryId(int Id);
 
         public IEnumerable<CategoryViewModel> Categories();
+
+        public MealViewModel Details(int Id);
     }
 }

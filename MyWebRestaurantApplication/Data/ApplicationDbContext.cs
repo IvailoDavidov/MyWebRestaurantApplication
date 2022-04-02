@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MyWebRestaurantApplication.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MyWebRestaurantApplication.Data
 {
@@ -16,7 +13,7 @@ namespace MyWebRestaurantApplication.Data
         }
 
         public DbSet<User> User { get; set; }
-        public DbSet<Menu> Menu { get; set; }
+        public DbSet<Menu> Menu { get; set; }     
         public DbSet<CategoryMeal> Categories { get; set; }
         public DbSet<Meal> Meals { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
@@ -43,7 +40,8 @@ namespace MyWebRestaurantApplication.Data
                 .HasForeignKey<User>(u => u.ShoppingCartId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                                     
+         
+                                    
 
             base.OnModelCreating(builder);
         }

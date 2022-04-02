@@ -9,24 +9,22 @@
     @foreach (var meal in Model)
     {
         <div class="col-md-4 mt-5">
-            <div class="card h-50" style="width: 20rem;">
-                <img class="card-img-top" src="@meal.PictureUrl" alt="@meal.Id">
+            <div class="card">
+                <img class="card-img-top" height=300 width=200 src="@meal.PictureUrl" alt="@meal.Id">
                 <div class="card-body">
                     <p class="card-text">
-                        @meal.Name - @meal.Price
-                        <ul>
-                            @foreach (var ingredient in @meal.Ingredients)
-                            {
-                                <li>@ingredient.Name</li>
-                            }
-                        </ul>
+                        @meal.Name - @meal.Price         
                     </p>
                 </div>
                 <div class="col-md-12">
                     <div class="card-footer ">
                         <p class="card-text">
+                            <a class="btn btn-sm fa-long-arrow-alt-right" asp-controller="Menu" asp-action="Details" asp-route-id="@meal.Id">
+                                <i class="bi bi-eye-fill"></i> Details
+                            </a>
                             @if (SignInManager.IsSignedIn(User) & !User.IsInRole("Administrator"))
                             {
+
                                 <a class="btn btn-outline-success fa-long-arrow-alt-right" asp-controller="User" asp-action="AddProduct" asp-route-id="@meal.Id">
                                     <i class="bi bi-eye-fill"></i> AddToCart(Price $@meal.Price)
                                 </a>

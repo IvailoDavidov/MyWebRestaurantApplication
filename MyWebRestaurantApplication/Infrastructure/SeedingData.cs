@@ -186,7 +186,7 @@ namespace MyWebRestaurantApplication.Infrastructure
                                          new Ingredient{Name ="Tomato sos"},
                                          new Ingredient{Name ="Ham"},
                                          new Ingredient{Name ="Pine-apple"},
-                                         new Ingredient{Name ="Yellow cheese"},                                       
+                                         new Ingredient{Name ="Yellow cheese"},
                                      }
                                  },
                                  new Meal
@@ -201,13 +201,13 @@ namespace MyWebRestaurantApplication.Infrastructure
                                          new Ingredient{Name ="Yellow cheese"},
                                          new Ingredient{Name ="Emental cheese"},
                                          new Ingredient{Name ="Blue cheese"},
-                                         new Ingredient{Name ="Gauda"},                                    
+                                         new Ingredient{Name ="Gauda"},
                                          new Ingredient{Name ="Olives"},
-                                         new Ingredient{Name ="Oil"}                                   
+                                         new Ingredient{Name ="Oil"}
                                      }
                                  }
                               }.ToList(),
-                              PictureUrl = "https://www.restu.cz/ir/restaurant/0fb/0fbbdcbeeff1582059fc88b59629da97.jpeg"
+                              PictureUrl = "https://pizzageppetto.bg/wp-content/uploads/2020/11/pizza-386717-1-scaled.jpg"
                            },
                            new CategoryMeal
                            {

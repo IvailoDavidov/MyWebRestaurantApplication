@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyWebRestaurantApplication.Areas.Admin.Models.Menu
 {
-    public class EditViewModel
+    public class MealEditViewModel
     {
         [Required]
         [StringLength(50,MinimumLength = 3)]
@@ -22,5 +22,6 @@ namespace MyWebRestaurantApplication.Areas.Admin.Models.Menu
         public int CategoryId { get; set; }
 
         public ICollection<CategoriesViewModel> Categories { get; set; }
+
     }
 }

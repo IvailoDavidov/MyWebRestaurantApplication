@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
 namespace MyWebRestaurantApplication.Data.Models
@@ -11,5 +10,9 @@ namespace MyWebRestaurantApplication.Data.Models
         public string ShoppingCartId { get; set; } 
 
         public ShoppingCart ShoppingCart { get; set; }
+
+        
+        [MaxLength(100)]
+        public string Address { get; set; }
     }
 }

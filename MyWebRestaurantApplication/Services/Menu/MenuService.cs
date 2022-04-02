@@ -53,5 +53,26 @@ namespace MyWebRestaurantApplication.Services.Menu
 
             return meals;
         }
+
+        public MealViewModel Details(int Id)
+        {
+            var meal = db.Meals
+                .Where(x => x.Id == Id)
+               .Select(x => new MealViewModel
+               {
+                   Name = x.Name,
+                   Price = x.Price,
+                   PictureUrl = x.PictureUrl,
+                   Count = x.Count,
+                   TotalGram = x.TotalGram,
+                   Ingredients = x.Ingredients
+                   .Select(i => new IngredientViewModel 
+                   { 
+                       Name = i.Name
+                   }).ToList(),
+               }).FirstOrDefault();
+
+            return meal;
+        }
     }
 }

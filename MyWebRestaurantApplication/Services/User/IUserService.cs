@@ -1,5 +1,4 @@
-﻿
-using MyWebRestaurantApplication.Data.Models;
+﻿using MyWebRestaurantApplication.Data.Models;
 using MyWebRestaurantApplication.Models.Cart;
 using MyWebRestaurantApplication.Models.User;
 using System.Collections.Generic;

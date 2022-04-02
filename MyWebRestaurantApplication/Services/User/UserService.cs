@@ -17,8 +17,6 @@ namespace MyWebRestaurantApplication.Services.User
             this.db = db;
         }
 
-
-
         public Data.Models.User GetById(string Id)
         {
             var user = db.Users
@@ -35,21 +33,6 @@ namespace MyWebRestaurantApplication.Services.User
         {
             var meal = db.Meals
                 .Where(x => x.Id == mealId).FirstOrDefault();
-            //Select(x => new UserMealsViewModel
-            //{
-            //    Id = x.Id,
-            //    Name = x.Name,
-            //    PictureUrl = x.PictureUrl,
-            //    Price = x.Price,
-            //    Count = x.Count,
-            //    TotalGram = x.TotalGram,
-            //    Ingredients = x.Ingredients.Select(i => new UserIngredientViewModel
-            //    {
-            //        Id = i.Id,
-            //        Name = i.Name
-            //    }).ToList()
-
-            //}).FirstOrDefault();
 
             return meal;
         }

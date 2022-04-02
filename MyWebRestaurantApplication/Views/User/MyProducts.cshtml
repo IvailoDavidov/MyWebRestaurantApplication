@@ -5,7 +5,6 @@
 @inject UserManager<User> UserManager
 
 
-
 @if (!Model.Any())
 {
     <div class="row container">
@@ -24,16 +23,9 @@ else
             <div class="col-md-4 mt-5">
                 <div class="card">
                     <img class="card-img-top" height=300 width=200 src="@meal.PictureUrl" alt="@meal.Id">
-                    <div class="card-body w-50 h-75">
+                    <div class="card-body">
                         <p class="card-text">
-                            @meal.Name - @meal.Price x @meal.Count
-
-                            <ul>
-                                @foreach (var ingredient in @meal.Ingredients)
-                                {
-                                    <li>@ingredient.Name</li>
-                                }
-                            </ul>
+                            @meal.Name - @meal.Price x @meal.Count                    
                         </p>
                     </div>
                     <div class="col-md-12">
@@ -41,6 +33,9 @@ else
                             <p class="card-text">
                                 @if (SignInManager.IsSignedIn(User) & !User.IsInRole("Administrator"))
                                 {
+                                    <a class="btn btn-sm fa-long-arrow-alt-right" asp-controller="Menu" asp-action="Details" asp-route-id="@meal.Id">
+                                        <i class="bi bi-eye-fill"></i> Details
+                                    </a>
                                     <a class="btn btn-outline-danger fa-long-arrow-alt-right" asp-controller="User" asp-action="RemoveProduct" asp-route-id="@meal.Id">
                                         <i class="bi bi-eye-fill"></i> Remove (Price $ -@meal.Price)
                                     </a>
