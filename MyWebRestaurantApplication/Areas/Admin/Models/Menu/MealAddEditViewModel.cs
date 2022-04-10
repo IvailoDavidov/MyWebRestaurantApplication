@@ -5,7 +5,6 @@ namespace MyWebRestaurantApplication.Areas.Admin.Models.Menu
 {
     public class MealAddEditViewModel
     {
-
         public int Id { get; set; }
 
         [Required]
@@ -25,6 +24,5 @@ namespace MyWebRestaurantApplication.Areas.Admin.Models.Menu
         public int CategoryId { get; set; }
 
         public ICollection<CategoriesViewModel> Categories { get; set; }
-
     }
 }

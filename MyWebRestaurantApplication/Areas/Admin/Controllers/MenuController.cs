@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MyWebRestaurantApplication.Areas.Admin.Models.Menu;
 using MyWebRestaurantApplication.Areas.Admin.Services.Menu;
-using MyWebRestaurantApplication.Data;
 using MyWebRestaurantApplication.Data.Models;
 
 namespace MyWebRestaurantApplication.Areas.Admin.Controllers
