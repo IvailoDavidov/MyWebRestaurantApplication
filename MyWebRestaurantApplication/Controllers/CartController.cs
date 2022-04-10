@@ -50,6 +50,11 @@ namespace MyWebRestaurantApplication.Controllers
                 return BadRequest();
             }
 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var user = userService.GetById(userId);
 
             if (user == null)

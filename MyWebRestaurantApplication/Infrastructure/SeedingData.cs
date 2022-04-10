@@ -34,7 +34,7 @@ namespace MyWebRestaurantApplication.Infrastructure
 
                 string adminEmail = "admin.restaurant@gmail.com";
                 string adminPass = "admin1234567";
-
+                
                  
                 var user = new User
                 {

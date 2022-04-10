@@ -11,8 +11,7 @@ namespace MyWebRestaurantApplication.Services.Cart
    
         public CartService(ApplicationDbContext db)
         {
-            this.db = db;
-         
+            this.db = db;        
         }
 
         public void Clear(Data.Models.User user)
@@ -22,8 +21,7 @@ namespace MyWebRestaurantApplication.Services.Cart
         }
 
         public void CreateOrder(OrderViewModel order, Data.Models.User user)
-        {
-           
+        {           
             var newOrder = new Order
             {              
                UserId = user.Id,

@@ -39,12 +39,12 @@ namespace MyWebRestaurantApplication.Services.User
 
         public ShoppingCartViewModel GetShoppingCart(string userId)
         {
-            var shoppingCart = db.ShoppingCart
-               .Where(x => x.UserId == userId)
-               .Select(sc => new ShoppingCartViewModel
+            var shoppingCart = db.User
+               .Where(x => x.Id == userId)
+               .Select(u => new ShoppingCartViewModel
                {
-                   Id = sc.Id,
-                   Meals = sc.Meals.Select(m => new UserMealsViewModel
+                   Id = u.ShoppingCartId,
+                   Meals = u.ShoppingCart.Meals.Select(m => new UserMealsViewModel
                    {
                        Id = m.Id,
                        Name = m.Name,

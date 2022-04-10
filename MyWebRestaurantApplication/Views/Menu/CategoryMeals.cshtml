@@ -5,6 +5,16 @@
 @inject UserManager<User> UserManager
 
 
+@if (!Model.Any())
+{
+    <div class="row container">
+        <div class="col-md-6 offset-3 alert alert-primary text-center mt-5">
+            <h2>Dont have any products yet</h2>
+            <h4>Add Some Meals</h4>     
+            <a class="button-w3ls mt-5" asp-area="Admin" asp-controller="Menu" asp-action="AddMeal">Add</a>
+        </div>
+    </div>
+}
 <div class="row">
     @foreach (var meal in Model)
     {
@@ -13,7 +23,7 @@
                 <img class="card-img-top" height=300 width=200 src="@meal.PictureUrl" alt="@meal.Id">
                 <div class="card-body">
                     <p class="card-text">
-                        @meal.Name - @meal.Price         
+                        @meal.Name - @meal.Price
                     </p>
                 </div>
                 <div class="col-md-12">

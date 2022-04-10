@@ -17,8 +17,11 @@ namespace MyWebRestaurantApplication.Services.Menu
 
         public CategoryMeal CategoryId(int Id)
         {
-            var categorie = db.Categories.Where(x => x.Id == Id).FirstOrDefault();
-            return  categorie;
+            var category = db.Categories
+                .Where(x => x.Id == Id)
+                .FirstOrDefault();
+
+            return  category;
         }
 
         public IEnumerable<CategoryViewModel> Categories()

@@ -5,6 +5,9 @@ namespace MyWebRestaurantApplication.Areas.Admin.Models.Menu
 {
     public class MealEditViewModel
     {
+
+        public int Id { get; set; }
+
         [Required]
         [StringLength(50,MinimumLength = 3)]
         public string Name { get; set; }

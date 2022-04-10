@@ -58,6 +58,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Services.Menu
 
         public void EditMeal(Meal meal, MealEditViewModel model)
         {
+            
             meal.Name = model.Name;
             meal.Price = model.Price;
             meal.PictureUrl = model.PictureUrl;
@@ -72,7 +73,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Services.Menu
             var meal = db.Meals
                 .Where(x => x.Id == mealId)
                 .Select(x => new MealEditViewModel
-                {
+                {                   
                     Name = x.Name,
                     Price = x.Price,
                     PictureUrl = x.PictureUrl,

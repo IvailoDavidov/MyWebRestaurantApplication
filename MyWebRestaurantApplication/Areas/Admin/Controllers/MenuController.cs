@@ -7,20 +7,17 @@ using MyWebRestaurantApplication.Data.Models;
 
 namespace MyWebRestaurantApplication.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = "Administrator")]
+    [Area("Admin")]   
     public class MenuController : Controller
-    {
-        private readonly ApplicationDbContext db;
+    {      
         private readonly IAdminMenuService adminMenuService;
 
-        public MenuController(ApplicationDbContext db, IAdminMenuService adminMenuService)
-        {
-            this.db = db;
+        public MenuController(IAdminMenuService adminMenuService)
+        {          
             this.adminMenuService = adminMenuService;
         }
 
-
+        [Authorize(Roles = "Administrator")]
         public IActionResult AddMeal()
         {
             if (!User.IsInRole("Administrator"))
@@ -37,6 +34,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public IActionResult AddMeal(MealAddViewModel meal)
         {
 
@@ -55,6 +53,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
 
             var newMeal = new Meal
             {
+                Id = meal.Id,
                 Name = meal.Name,
                 Price = meal.Price,
                 TotalGram = meal.TotalGram,
@@ -72,6 +71,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
         }
 
 
+        [Authorize(Roles = "Administrator")]
         public IActionResult EditMeal(int Id)
         {
             if (!User.IsInRole("Administrator"))
@@ -86,6 +86,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public IActionResult EditMeal(int Id, MealEditViewModel model)
         {
 
@@ -115,6 +116,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
             return RedirectToAction("Meals", "Menu", new { area = "" });
         }
 
+        [Authorize(Roles = "Administrator")]
         public IActionResult DeleteMeal(int Id)
         {
             if (!User.IsInRole("Administrator"))
@@ -130,7 +132,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
             }
 
             adminMenuService.RemoveMeal(meal);
-            return RedirectToAction("Gallery", "Home", new { area = "" });
+            return RedirectToAction("Meals", "Menu", new { area = "" });
         }
     }
 }
