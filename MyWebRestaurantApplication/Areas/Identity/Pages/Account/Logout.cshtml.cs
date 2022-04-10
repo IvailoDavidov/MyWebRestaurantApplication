@@ -30,7 +30,7 @@ namespace MyWebRestaurantApplication.Areas.Identity.Pages.Account
             _logger.LogInformation("User logged out.");
             if (returnUrl != null)
             {
-                var url = "https://localhost:44398/";
+                var url = "/";
                 return Redirect(url);
             }
             else
