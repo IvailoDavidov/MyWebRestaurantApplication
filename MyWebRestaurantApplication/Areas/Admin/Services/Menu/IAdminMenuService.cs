@@ -16,9 +16,9 @@ namespace MyWebRestaurantApplication.Areas.Admin.Services.Menu
 
         public void RemoveMeal(Meal meal);
 
-        public void EditMeal(Meal meal, MealEditViewModel model);
+        public void EditMeal(Meal meal, MealAddEditViewModel model);
 
-        public MealEditViewModel GetMealWithCategories(int mealId, ICollection<CategoriesViewModel> categories);
+        public MealAddEditViewModel GetMealWithCategories(int mealId, ICollection<CategoriesViewModel> categories);
 
     }
 }

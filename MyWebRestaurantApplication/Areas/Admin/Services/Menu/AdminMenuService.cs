@@ -56,7 +56,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Services.Menu
             db.SaveChanges();
         }
 
-        public void EditMeal(Meal meal, MealEditViewModel model)
+        public void EditMeal(Meal meal, MealAddEditViewModel model)
         {
             
             meal.Name = model.Name;
@@ -68,11 +68,11 @@ namespace MyWebRestaurantApplication.Areas.Admin.Services.Menu
             db.SaveChanges();
         }
 
-        public MealEditViewModel GetMealWithCategories(int mealId, ICollection<CategoriesViewModel> categories)
+        public MealAddEditViewModel GetMealWithCategories(int mealId, ICollection<CategoriesViewModel> categories)
         {
             var meal = db.Meals
                 .Where(x => x.Id == mealId)
-                .Select(x => new MealEditViewModel
+                .Select(x => new MealAddEditViewModel
                 {                   
                     Name = x.Name,
                     Price = x.Price,

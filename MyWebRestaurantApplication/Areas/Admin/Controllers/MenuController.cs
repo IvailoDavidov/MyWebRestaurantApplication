@@ -27,7 +27,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
 
             var categories = adminMenuService.Categories();
 
-            return View(new MealAddViewModel
+            return View(new MealAddEditViewModel
             {
                 Categories = categories
             });
@@ -35,7 +35,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public IActionResult AddMeal(MealAddViewModel meal)
+        public IActionResult AddMeal(MealAddEditViewModel meal)
         {
 
             if (!User.IsInRole("Administrator"))
@@ -87,7 +87,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public IActionResult EditMeal(int Id, MealEditViewModel model)
+        public IActionResult EditMeal(int Id, MealAddEditViewModel model)
         {
 
             if (!User.IsInRole("Administrator"))

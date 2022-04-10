@@ -24,7 +24,7 @@ namespace MyWebRestaurantApplication.Test.Area.Admin.Controllers
                  .ActionAttributes(atr => atr.PassingFor<AuthorizeAttribute>(authorize => authorize.Roles == "Administrator"))
                  .AndAlso()
                  .ShouldReturn()
-                 .View(v => v.WithModelOfType<MealAddViewModel>()
+                 .View(v => v.WithModelOfType<MealAddEditViewModel>()
                  .Passing(m => m.CategoryId = 5));
         }
 
@@ -35,7 +35,7 @@ namespace MyWebRestaurantApplication.Test.Area.Admin.Controllers
             MyController<MenuController>
                 .Instance(controller => controller
                 .WithUser(usr => usr.InRole("Administrator")))
-                .Calling(c => c.AddMeal(new MealAddViewModel
+                .Calling(c => c.AddMeal(new MealAddEditViewModel
                 {
                     Name = "Tomato",
                     Id = 5,
@@ -72,7 +72,7 @@ namespace MyWebRestaurantApplication.Test.Area.Admin.Controllers
                 .ActionAttributes(atr => atr.PassingFor<AuthorizeAttribute>(authorize => authorize.Roles == "Administrator"))              
                 .AndAlso()
                 .ShouldReturn()
-                .View(v => v.WithModelOfType<MealEditViewModel>()
+                .View(v => v.WithModelOfType<MealAddEditViewModel>()
                 .Passing(m => m.Name == "tomato"));
                              
         }
@@ -85,7 +85,7 @@ namespace MyWebRestaurantApplication.Test.Area.Admin.Controllers
                 .Instance(controller => controller
                 .WithUser(usr => usr.InRole("Administrator"))
                 .WithData(Enumerable.Range(0, 1).Select(i => new Meal { Id = 7, Name = "tomato" })))
-                .Calling(c => c.EditMeal(7, new MealEditViewModel
+                .Calling(c => c.EditMeal(7, new MealAddEditViewModel
                 {
                     Name = mealName,
                     Id = mealId,

@@ -1,0 +1,64 @@
+﻿@model MealAddEditViewModel
+
+@{
+    ViewData["Title"] = "Add Meal";
+}
+
+<div class="callbacks_container">
+    <ul class="rslides" id="slider3">
+        <li>
+            <div class="slider-info bg2">
+                @* <div class="w3l-overlay">*@
+                <div class="banner-text text-center container">
+                    <h3 class="text-white mb-md-4 mb-3">
+                        Come to the luxurious
+                        <span>Tasty</span>
+                    </h3>
+                    <p class="movetxt text-white mb-4">Find Delivery Outlet near you</p>
+                    <div class="col-md-5 offset-md-3">
+                        <form method="post">
+                            <div class="form-group">
+                                <p class="color text-white">Name</p>                            
+                                <input asp-for="Name" class="form-control">
+                                <span asp-validation-for="Name"  class="fa-medium-m text-warning"></span>
+                            </div>
+                            <div class="form-group">
+                                <p class="color text-white">Price</p>
+                                <input asp-for="Price"  class="form-control">
+                                <span asp-validation-for="Price" class="fa-medium text-warning"></span>
+                            </div>
+                            <div class="form-group">
+                                <p class="color text-white">Picture</p>
+                                <input asp-for="PictureUrl" class="form-control">
+                                <span asp-validation-for="PictureUrl" class="fa-medium-m text-warning"></span>
+                            </div>                        
+                            <div class="form-group">
+                                <p class="color text-white">Gram</p>
+                                <input asp-for="TotalGram"  class="form-control">
+                                <span asp-validation-for="TotalGram" class="fa-medium-m text-warningg"></span>
+                            </div>
+                            <div class="form-group">
+                                <p class="color text-white">Category</p>
+                                <select asp-for="CategoryId" class="form-control">
+                                    @foreach (var category in Model.Categories)
+                                    {
+                                        <option value="@category.Id">@category.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <input class="btn btn-danger" type="submit" value="Confirm" />
+                        </form>
+                    </div>
+
+                </div>
+                @*</div>*@
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+ }
+
