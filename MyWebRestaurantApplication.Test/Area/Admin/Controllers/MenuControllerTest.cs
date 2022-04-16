@@ -33,7 +33,8 @@ namespace MyWebRestaurantApplication.Test.Area.Admin.Controllers
         {
             MyController<MenuController>
                 .Instance(controller => controller
-                .WithUser(usr => usr.InRole("Administrator")))
+                .WithUser(usr => usr.InRole("Administrator"))
+                .WithData(Enumerable.Range(0, 1).Select(i => new CategoryMeal { Id = 3 })))
                 .Calling(c => c.AddMeal(new MealAddEditViewModel
                 {
                     Name = "Tomato",
@@ -42,6 +43,7 @@ namespace MyWebRestaurantApplication.Test.Area.Admin.Controllers
                     TotalGram = 350,
                     CategoryId = 3,
                     PictureUrl = "https://www.ambitiouskitchen.com/wp-content/uploads/2018/02/chickensoup-2-725x725-1.jpg"
+                    
                 }))
                 .ShouldHave()
                 .ActionAttributes(atr => atr.PassingFor<AuthorizeAttribute>(authorize => authorize.Roles == "Administrator"))

@@ -23,6 +23,6 @@ namespace MyWebRestaurantApplication.Areas.Admin.Models.Menu
 
         public int CategoryId { get; set; }
 
-        public ICollection<CategoriesViewModel> Categories { get; set; }
+        public IEnumerable<CategoriesViewModel> Categories { get; set; }
     }
 }
