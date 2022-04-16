@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MyWebRestaurantApplication.Areas.Admin.Models.Menu;
 using MyWebRestaurantApplication.Data.Models;
 
@@ -6,19 +7,21 @@ namespace MyWebRestaurantApplication.Areas.Admin.Services.Menu
 {
     public interface IAdminMenuService
     {
-        public ICollection<CategoriesViewModel> Categories();
+        public Task<ICollection<CategoriesViewModel>> Categories();
 
-        public Meal GetMealById(int mealId);
+        public Task<Meal> GetMealById(int mealId);
 
         public bool CheckMealExists(string mealName);
 
-        public void AddMeal(Meal meal);
+        public Task AddMeal(Meal meal);
 
-        public void RemoveMeal(Meal meal);
+        public Task RemoveMeal(Meal meal);
 
-        public void EditMeal(Meal meal, MealAddEditViewModel model);
+        public Task EditMeal(Meal meal, MealAddEditViewModel model);
 
-        public MealAddEditViewModel GetMealWithCategories(int mealId, ICollection<CategoriesViewModel> categories);
+        public Task<MealAddEditViewModel> GetMealWithCategories(int mealId, ICollection<CategoriesViewModel> categories);
+
+        public bool CategoryExists(int categoryId);
 
     }
 }

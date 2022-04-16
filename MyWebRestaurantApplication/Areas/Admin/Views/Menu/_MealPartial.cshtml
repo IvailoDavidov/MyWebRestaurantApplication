@@ -9,8 +9,7 @@
                     <h3 class="text-white mb-md-4 mb-3">
                         Come to the luxurious
                         <span>Tasty</span>
-                    </h3>
-                    <p class="movetxt text-white mb-4">Find Delivery Outlet near you</p>
+                    </h3>               
                     <div class="col-md-5 offset-md-3">
                         <form method="post">
                             <div class="form-group">
@@ -31,7 +30,7 @@
                             <div class="form-group">
                                 <p class="color text-white">Gram</p>
                                 <input asp-for="TotalGram"  class="form-control">
-                                <span asp-validation-for="TotalGram" class="fa-medium-m text-warningg"></span>
+                                <span asp-validation-for="TotalGram" class="fa-medium-m text-warning"></span>
                             </div>
                             <div class="form-group">
                                 <p class="color text-white">Category</p>
@@ -41,6 +40,7 @@
                                         <option value="@category.Id">@category.Name</option>
                                     }
                                 </select>
+                                   <span asp-validation-for="CategoryId" class="fa-medium-m text-warning"></span>
                             </div>
                             <input class="btn btn-danger" type="submit" value="Confirm" />
                         </form>

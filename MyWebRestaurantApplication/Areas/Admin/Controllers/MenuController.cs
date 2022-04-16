@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyWebRestaurantApplication.Areas.Admin.Models.Menu;
 using MyWebRestaurantApplication.Areas.Admin.Services.Menu;
 using MyWebRestaurantApplication.Data.Models;
+using System.Threading.Tasks;
 
 namespace MyWebRestaurantApplication.Areas.Admin.Controllers
 {
@@ -17,14 +18,14 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
         }
 
         [Authorize(Roles = "Administrator")]
-        public IActionResult AddMeal()
+        public async Task<IActionResult> AddMeal()
         {
             if (!User.IsInRole("Administrator"))
             {
                 return Unauthorized();
             }
 
-            var categories = adminMenuService.Categories();
+            var categories = await adminMenuService.Categories();
 
             return View(new MealAddEditViewModel
             {
@@ -34,7 +35,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public IActionResult AddMeal(MealAddEditViewModel meal)
+        public async Task<IActionResult> AddMeal(MealAddEditViewModel meal)
         {
 
             if (!User.IsInRole("Administrator"))
@@ -42,13 +43,25 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
                 return Unauthorized();
             }
 
+            if (adminMenuService.CheckMealExists(meal.Name))
+            {
+                this.ModelState.AddModelError(nameof(meal.Name), "Meal already exist.");
+            }
+
+            if (!adminMenuService.CategoryExists(meal.CategoryId))
+            {
+                this.ModelState.AddModelError(nameof(meal.CategoryId), "Category does not exist.");
+            }
+
+
             if (!ModelState.IsValid)
             {
-                var categories = adminMenuService.Categories();
+                var categories = await adminMenuService.Categories();
                 meal.Categories = categories;
 
                 return View(meal);
             }
+           
 
             var newMeal = new Meal
             {
@@ -59,34 +72,30 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
                 PictureUrl = meal.PictureUrl,
                 CategoryId = meal.CategoryId
             };
-
-
-            if (adminMenuService.CheckMealExists(newMeal.Name))
-            {
-                adminMenuService.AddMeal(newMeal);
-            }
-
+           
+               await adminMenuService.AddMeal(newMeal);
+                       
             return RedirectToAction("Meals", "Menu", new { area = "" });
         }
 
 
         [Authorize(Roles = "Administrator")]
-        public IActionResult EditMeal(int Id)
+        public async Task<IActionResult> EditMeal(int Id)
         {
             if (!User.IsInRole("Administrator"))
             {
                 return Unauthorized();
             }
 
-            var categories = adminMenuService.Categories();  
-            var meal = adminMenuService.GetMealWithCategories(Id, categories);
+            var categories = await  adminMenuService.Categories();  
+            var meal = await adminMenuService.GetMealWithCategories(Id, categories);
 
             return View(meal);
         }
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public IActionResult EditMeal(int Id, MealAddEditViewModel model)
+        public async Task<IActionResult> EditMeal(int Id, MealAddEditViewModel model)
         {
 
             if (!User.IsInRole("Administrator"))
@@ -94,7 +103,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
                 return Unauthorized();
             }
 
-            var meal = adminMenuService.GetMealById(Id);
+            var meal = await adminMenuService.GetMealById(Id);
 
             if (!ModelState.IsValid)
             {
@@ -111,26 +120,26 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
                 return Unauthorized();
             }
 
-            adminMenuService.EditMeal(meal, model);
+            await  adminMenuService.EditMeal(meal, model);
             return RedirectToAction("Meals", "Menu", new { area = "" });
         }
 
         [Authorize(Roles = "Administrator")]
-        public IActionResult DeleteMeal(int Id)
+        public async Task<IActionResult> DeleteMeal(int Id)
         {
             if (!User.IsInRole("Administrator"))
             {
                 return Unauthorized();
             }
 
-            var meal = adminMenuService.GetMealById(Id);
+            var meal = await adminMenuService.GetMealById(Id);
 
             if (meal == null)
             {
                 return RedirectToAction("Error", "Home");
             }
 
-            adminMenuService.RemoveMeal(meal);
+            await adminMenuService.RemoveMeal(meal);
             return RedirectToAction("Meals", "Menu", new { area = "" });
         }
     }

@@ -1,8 +1,10 @@
-﻿using MyWebRestaurantApplication.Areas.Admin.Models.Menu;
+﻿using Microsoft.EntityFrameworkCore;
+using MyWebRestaurantApplication.Areas.Admin.Models.Menu;
 using MyWebRestaurantApplication.Data;
 using MyWebRestaurantApplication.Data.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyWebRestaurantApplication.Areas.Admin.Services.Menu
 {
@@ -14,49 +16,49 @@ namespace MyWebRestaurantApplication.Areas.Admin.Services.Menu
         {
             this.db = db;
         }
-        public ICollection<CategoriesViewModel> Categories()
+        public async Task<ICollection<CategoriesViewModel>> Categories()
         {
-            var categories = db.Categories
+            var categories =  await db.Categories
              .Select(x => new CategoriesViewModel
              {
                  Id = x.Id,
                  Name = x.Name
-             }).ToList();
+             }).ToListAsync();
 
             return categories;
         }
 
         public bool CheckMealExists(string mealName)
         {
-            if (!db.Meals.Any(x => x.Name == mealName))
+            if (db.Meals.Any(x => x.Name == mealName))
             {
                 return true;
             }
             return false;
         }
 
-        public Meal GetMealById(int mealId)
+        public async Task<Meal> GetMealById(int mealId)
         {
-            var meal = db.Meals
+            var meal = await  db.Meals
                .Where(x => x.Id == mealId)         
-               .FirstOrDefault();
+               .FirstOrDefaultAsync();
 
             return meal;
         }
 
-        public void AddMeal(Meal meal)
+        public async Task AddMeal(Meal meal)
         {
-            db.Meals.Add(meal);
-            db.SaveChanges();
+            await db.Meals.AddAsync(meal);
+            await db.SaveChangesAsync();
         }
 
-        public void RemoveMeal(Meal meal)
+        public async Task RemoveMeal(Meal meal)
         {
-            db.Meals.Remove(meal);
-            db.SaveChanges();
+             db.Meals.Remove(meal);
+             await db.SaveChangesAsync();
         }
 
-        public void EditMeal(Meal meal, MealAddEditViewModel model)
+        public async Task EditMeal(Meal meal, MealAddEditViewModel model)
         {
             
             meal.Name = model.Name;
@@ -65,12 +67,12 @@ namespace MyWebRestaurantApplication.Areas.Admin.Services.Menu
             meal.TotalGram = model.TotalGram;
             meal.CategoryId = model.CategoryId;
 
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
-        public MealAddEditViewModel GetMealWithCategories(int mealId, ICollection<CategoriesViewModel> categories)
+        public async Task <MealAddEditViewModel> GetMealWithCategories(int mealId, ICollection<CategoriesViewModel> categories)
         {
-            var meal = db.Meals
+            var meal = await db.Meals
                 .Where(x => x.Id == mealId)
                 .Select(x => new MealAddEditViewModel
                 {                   
@@ -81,9 +83,14 @@ namespace MyWebRestaurantApplication.Areas.Admin.Services.Menu
                     CategoryId = x.CategoryId,
                     Categories = categories,
 
-                }).FirstOrDefault();
+                }).FirstOrDefaultAsync();
 
             return meal;
         }
+
+        public bool CategoryExists(int categoryId)
+           => this.db
+               .Categories
+               .Any(c => c.Id == categoryId);
     }
 }
