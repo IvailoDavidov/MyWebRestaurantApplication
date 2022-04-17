@@ -3,10 +3,12 @@
 
 <div class="row container-fluid">
     <div class="col-md-8 offset-2 mt-5">
-        <div class="text-center">
-            <h1>Cart Summary</h1>
+        <div class="text-center mt-5">
+            <h3 class="title text-center text-dark mb-sm-5 mb-4 mt-5">
+                <span>Cart Summary</span>
+            </h3>       
         </div>
-        <table class="table">
+        <table class="table mt-5">
             <thead>
                 <tr>
                     <th>Amount</th>
@@ -22,7 +24,7 @@
                         <td class="align-middle">@item.Count</td>
                         <td class="align-middle">@item.Name</td>
                         <td class="align-middle">@item.Price.ToString("c")</td>
-                        <td class="align-middle">@((item.Count * item.Price).ToString("c"))</td>                  
+                        <td class="align-middle">@((item.Count * item.Price).ToString("c"))</td>
                     </tr>
                 }
             </tbody>
@@ -38,6 +40,9 @@
             </tfoot>
         </table>
     </div>
+</div>
+<div class="button-div mt-5">
+    <a href="/User/MyProducts" class="btn btn-outline-warning btn-lg btn-block">Back To Cart</a>
 </div>
 <div class="button-div">
     <a href="/Cart/ConfirmOrder" class="btn btn-outline-success btn-lg btn-block">Confirm Order (@Model.TotalSum$)</a>

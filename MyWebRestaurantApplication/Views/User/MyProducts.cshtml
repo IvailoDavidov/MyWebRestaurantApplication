@@ -21,7 +21,7 @@ else
         @foreach (var meal in Model)
         {
             <div class="col-md-4 mt-5">
-                <div class="card">
+                <div class="card mt-5">
                     <img class="card-img-top" height=300 width=200 src="@meal.PictureUrl" alt="@meal.Id">
                     <div class="card-body">
                         <p class="card-text">
@@ -47,7 +47,10 @@ else
             </div>
         }
     </div>
-    <div class="button-div mt-5">
-        <a href="/Cart/Total" class="btn btn-outline-success btn-lg btn-block">Continue</a>
+      <div class="button-div mt-5">
+        <a href="/Menu/Meals" class="btn btn-outline-warning btn-lg btn-block">Back To Menu</a>
+    </div>
+    <div class="button-div">
+        <a href="/Cart/Total" class="btn btn-outline-success btn-lg btn-block">Continue Order</a>
     </div>
 }
