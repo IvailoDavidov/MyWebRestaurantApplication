@@ -8,8 +8,8 @@
 @if (!Model.Any() && User.IsInRole("Administrator"))
 {
     <div class="row container">
-        <div class="col-md-6 offset-3 alert alert-primary text-center mt-5">
-            <h2>Dont have any products yet</h2>
+        <div class="col-md-6 offset-3 alert alert-primary text-center mt-5">        
+            <div class="h2 mt-5">Dont have any products yet</div>
             <h4>Add Some Meals</h4>     
             <a class="button-w3ls mt-5" asp-area="Admin" asp-controller="Menu" asp-action="AddMeal">Add</a>
         </div>
