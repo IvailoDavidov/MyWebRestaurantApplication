@@ -4,6 +4,7 @@ using MyWebRestaurantApplication.Infrastructure;
 using MyWebRestaurantApplication.Models.Cart;
 using MyWebRestaurantApplication.Services.User;
 using MyWebRestaurantApplication.Services.Cart;
+using System.Threading.Tasks;
 
 namespace MyWebRestaurantApplication.Controllers
 {
@@ -21,7 +22,7 @@ namespace MyWebRestaurantApplication.Controllers
         }
 
         [Authorize]
-        public IActionResult Total()
+        public async Task<IActionResult> Total()
         {
             var userId = this.User.GetId();
             if (userId == null)
@@ -29,19 +30,19 @@ namespace MyWebRestaurantApplication.Controllers
                 return BadRequest();
             }
            
-            var user = userService.GetById(userId);
+            var user = await userService.GetById(userId);
 
             if (user == null)
             {
                 return BadRequest();
             }
                
-            var shoppingCart = userService.GetShoppingCart(userId);
+            var shoppingCart = await userService.GetShoppingCart(userId);
             return View(shoppingCart);
         }
 
         [Authorize]
-        public IActionResult ConfirmOrder(OrderViewModel order)
+        public async Task<IActionResult> ConfirmOrder(OrderViewModel order)
         {
             var userId = this.User.GetId();
 
@@ -55,15 +56,14 @@ namespace MyWebRestaurantApplication.Controllers
                 return BadRequest();
             }
 
-            var user = userService.GetById(userId);
+            var user = await userService.GetById(userId);
 
             if (user == null)
             {
                 return BadRequest();
             }
 
-            cartService.CreateOrder(order, user);
-            cartService.Clear(user);
+            await cartService.CreateOrder(order, user);
 
             return View();
         }

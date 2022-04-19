@@ -1,8 +1,10 @@
-﻿using MyWebRestaurantApplication.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using MyWebRestaurantApplication.Data;
 using MyWebRestaurantApplication.Data.Models;
 using MyWebRestaurantApplication.Models.Menu;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyWebRestaurantApplication.Services.Menu
 {
@@ -15,32 +17,32 @@ namespace MyWebRestaurantApplication.Services.Menu
             this.db = db;
         }
 
-        public CategoryMeal CategoryId(int Id)
+        public async Task<CategoryMeal> CategoryId(int Id)
         {
-            var category = db.Categories
+            var category = await db.Categories
                 .Where(x => x.Id == Id)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return  category;
         }
 
-        public IEnumerable<CategoryViewModel> Categories()
+        public async Task<IEnumerable<CategoryViewModel>> Categories()
         {
-            var categories = db.Categories.Select(x => new CategoryViewModel
+            var categories = await db.Categories.Select(x => new CategoryViewModel
             {
                 Id = x.Id,
                 Name = x.Name,
                 PictureUrl = x.PictureUrl
 
-            }).ToList();
+            }).ToListAsync();
 
             return categories;
         }
 
-        public ICollection<MealViewModel> MealsByCategory(int Id)
+        public async Task<ICollection<MealViewModel>> MealsByCategory(int Id)
         {
 
-            var meals = db.Meals.Where(x => x.CategoryId == Id).Select(x => new MealViewModel
+            var meals = await db.Meals.Where(x => x.CategoryId == Id).Select(x => new MealViewModel
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -52,14 +54,14 @@ namespace MyWebRestaurantApplication.Services.Menu
 
                 }).ToList(),
 
-            }).ToList();
+            }).ToListAsync();
 
             return meals;
         }
 
-        public MealViewModel Details(int Id)
+        public async Task<MealViewModel> Details(int Id)
         {
-            var meal = db.Meals
+            var meal = await db.Meals
                 .Where(x => x.Id == Id)
                .Select(x => new MealViewModel
                {
@@ -73,7 +75,7 @@ namespace MyWebRestaurantApplication.Services.Menu
                    { 
                        Name = i.Name
                    }).ToList(),
-               }).FirstOrDefault();
+               }).FirstOrDefaultAsync();
 
             return meal;
         }

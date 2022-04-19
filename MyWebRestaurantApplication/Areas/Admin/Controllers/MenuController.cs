@@ -35,6 +35,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
+        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> AddMeal(MealAddEditViewModel meal)
         {
 
@@ -95,6 +96,7 @@ namespace MyWebRestaurantApplication.Areas.Admin.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
+        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> EditMeal(int Id, MealAddEditViewModel model)
         {
 

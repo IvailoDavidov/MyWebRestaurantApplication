@@ -2,22 +2,23 @@
 using MyWebRestaurantApplication.Models.Cart;
 using MyWebRestaurantApplication.Models.User;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MyWebRestaurantApplication.Services.User
 {
     public interface IUserService
     {
-        public Data.Models.User GetById(string Id);
+        public Task<Data.Models.User> GetById(string Id);
 
-        public IEnumerable<UserMealsViewModel> Products(string userId);
+        public Task<IEnumerable<UserMealsViewModel>> Products(string userId);
 
-        public Meal GetMealById(int mealId);
+        public Task<Meal> GetMealById(int mealId);
 
-        public ShoppingCartViewModel GetShoppingCart(string userId);
+        public Task<ShoppingCartViewModel> GetShoppingCart(string userId);
 
-        public void SaveProduct(Data.Models.User user,Meal meal);
+        public Task SaveProduct(Data.Models.User user, Meal meal);
 
-        public void RemoveProduct(Data.Models.User user, Meal meal);
+        public Task RemoveProduct(Data.Models.User user, Meal meal);
        
     }
 }

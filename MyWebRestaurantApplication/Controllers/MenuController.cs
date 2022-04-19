@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyWebRestaurantApplication.Services.Menu;
+using System.Threading.Tasks;
 
 namespace MyWebRestaurantApplication.Controllers
 {
@@ -14,28 +15,28 @@ namespace MyWebRestaurantApplication.Controllers
             this.menuService = menuService;          
         }
 
-        public IActionResult CategoryMeals(int Id)
+        public async Task<IActionResult> CategoryMeals(int Id)
         {
-            var category = menuService.CategoryId(Id);
+            var category = await menuService.CategoryId(Id);
 
             if (category == null)
             {
                 return BadRequest();
             }
 
-            var meals = menuService.MealsByCategory(Id);          
+            var meals = await menuService.MealsByCategory(Id);          
             return View(meals);                 
         }
 
-        public IActionResult Meals()
+        public async Task<IActionResult> Meals()
         {
-            var categories = menuService.Categories();
+            var categories = await menuService.Categories();
             return View(categories);
         }
         
-        public IActionResult Details(int Id)
+        public async Task<IActionResult> Details(int Id)
         {
-            var meal = menuService.Details(Id);
+            var meal = await menuService.Details(Id);
             return View(meal);
         }
     }

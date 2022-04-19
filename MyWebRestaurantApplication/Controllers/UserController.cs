@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyWebRestaurantApplication.Infrastructure;
 using MyWebRestaurantApplication.Services.User;
+using System.Threading.Tasks;
 
 namespace MyWebRestaurantApplication.Controllers
 {
@@ -16,33 +17,33 @@ namespace MyWebRestaurantApplication.Controllers
         }
 
         [Authorize]
-        public IActionResult MyProducts()
+        public async Task<IActionResult> MyProducts()
         {
             string userId = this.User.GetId();
-            var user = userService.GetById(userId);
+            var user = await userService.GetById(userId);
 
             if (user == null)
             {
                 return BadRequest();
             }
 
-            var products = userService.Products(userId);
+            var products = await userService.Products(userId);
             return View(products);
         }
 
 
         [Authorize]
-        public IActionResult AddProduct(int Id)
+        public async Task<IActionResult> AddProduct(int Id)
         {
             string userId = this.User.GetId();
-            var user = userService.GetById(userId);
+            var user = await userService.GetById(userId);
 
             if (user == null)
             {
                 return BadRequest();
             }
 
-            var meal = userService.GetMealById(Id);
+            var meal = await userService.GetMealById(Id);
 
             if (meal == null)
             {
@@ -68,29 +69,29 @@ namespace MyWebRestaurantApplication.Controllers
                 meal.Count = 1;
             }
 
-            userService.SaveProduct(user,meal);
+            await userService.SaveProduct(user,meal);
             return RedirectToAction("MyProducts", "User");
         }
 
         [Authorize]
-        public IActionResult RemoveProduct(int Id)
+        public async Task<IActionResult> RemoveProduct(int Id)
         {
-            string userId = this.User.GetId();           
-            var user = userService.GetById(userId);
+            string userId = this.User.GetId();             
+            var user = await userService.GetById(userId);
 
             if (user == null)
             {
                 return BadRequest();
             }
 
-            var meal = userService.GetMealById(Id);
+            var meal = await userService.GetMealById(Id);
 
             if (meal == null)
             {
                 return BadRequest();
             }
 
-            userService.RemoveProduct(user, meal);
+            await userService.RemoveProduct(user, meal);
             return RedirectToAction("MyProducts", "User");
         }       
     }

@@ -5,6 +5,7 @@ using MyWebRestaurantApplication.Models.Cart;
 using MyWebRestaurantApplication.Models.User;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyWebRestaurantApplication.Services.User
 {
@@ -17,29 +18,29 @@ namespace MyWebRestaurantApplication.Services.User
             this.db = db;
         }
 
-        public Data.Models.User GetById(string Id)
+        public async Task<Data.Models.User> GetById(string Id)
         {
-            var user = db.Users
+            var user = await db.Users
                 .Include(x => x.ShoppingCart)
                 .ThenInclude(x => x.Meals)
                 .ThenInclude(x => x.Ingredients)
                 .Where(x => x.Id == Id)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return user;
         }
 
-        public Meal GetMealById(int mealId)
+        public async Task<Meal> GetMealById(int mealId)
         {
-            var meal = db.Meals
-                .Where(x => x.Id == mealId).FirstOrDefault();
+            var meal = await db.Meals
+                .Where(x => x.Id == mealId).FirstOrDefaultAsync();
 
             return meal;
         }
 
-        public ShoppingCartViewModel GetShoppingCart(string userId)
+        public async Task<ShoppingCartViewModel> GetShoppingCart(string userId)
         {
-            var shoppingCart = db.User
+            var shoppingCart = await db.User
                .Where(x => x.Id == userId)
                .Select(u => new ShoppingCartViewModel
                {
@@ -57,17 +58,17 @@ namespace MyWebRestaurantApplication.Services.User
                        {
                            Id = i.Id,
                            Name = i.Name
-                       }).ToList()
+                       }).ToList(),
                    }).ToList()
                })
-               .FirstOrDefault();
+               .FirstOrDefaultAsync();
 
             return shoppingCart;
         }
 
-        public IEnumerable<UserMealsViewModel> Products(string userId)
+        public async Task<IEnumerable<UserMealsViewModel>> Products(string userId)
         {
-            var user = GetById(userId);
+            var user = await GetById(userId);
 
             var products = user
                 .ShoppingCart
@@ -92,24 +93,24 @@ namespace MyWebRestaurantApplication.Services.User
             return products;
         }
 
-        public void RemoveProduct(Data.Models.User user, Meal meal)
+        public async Task RemoveProduct(Data.Models.User user, Meal meal)
         {
             if (meal.Count > 1)
             {
                 meal.Count--;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             else
             {
                 user.ShoppingCart.Meals.Remove(meal);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
-        public void SaveProduct(Data.Models.User user, Meal meal)
+        public async Task SaveProduct(Data.Models.User user, Meal meal)
         {
             user.ShoppingCart.Meals.Add(meal);
-            db.SaveChanges();
+            await  db.SaveChangesAsync();
         }
     }
 }
